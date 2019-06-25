@@ -1,9 +1,7 @@
 require('dotenv').config()
+require('./utils/validateEnv')
 
 const Discord = require('discord.js')
-
-
-// const lame = require('lame')
 
 
 const client = new Discord.Client()
