@@ -27,7 +27,6 @@ const messageHandler = (client) => {
                message.reply('ready!')
 
                // Based on https://gist.github.com/eslachance/fb70fc036183b7974d3b9191601846ba
-               // create our voice receiver
                const receiver = connection.createReceiver()
                connection.on('speaking', (user, speaking) => {
                   if(speaking) {
@@ -41,7 +40,6 @@ const messageHandler = (client) => {
                      let outputStream = fs.createWriteStream(fileName)
 
                      audioStream.pipe(outputStream)
-                     outputStream.on('data', console.log)
 
                      audioStream.on('end', () => {
                         console.log(`I'm no longer listening to ${user.id}`)
@@ -59,8 +57,6 @@ const messageHandler = (client) => {
                            fs.createReadStream(outputFileName).pipe(recognizeStream)
 
                            recognizeStream.on('data', (event) => {
-                              onEvent('Data:', event)
-                              console.log(event)
                               if(event.results.length >= 1) {
                                  translate(event.results[event.result_index].alternatives[0].transcript, 'en-de')
                                     .then((translation) => {
@@ -70,14 +66,9 @@ const messageHandler = (client) => {
                            })
 
                            recognizeStream.on('error', (event) => {
-                              onEvent('Error:', event)
-                           })
-
-                           recognizeStream.on('close', (event) => {
-                              onEvent('Close:', event)
+                              console.error('Recognition error:', event)
                            })
                         })
-                        // console.log(`ffmpeg -f s16le -ar 44.1k -ac 1 -i ${fileName} ${outputFileName}`)
                      })
                   }
                })
@@ -86,11 +77,5 @@ const messageHandler = (client) => {
       }
    }
 }
-
-
-function onEvent(name, event) {
-   console.log(name, JSON.stringify(event, null, 2))
-}
-
 
 module.exports = messageHandler
