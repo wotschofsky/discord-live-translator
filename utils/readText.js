@@ -12,7 +12,7 @@ const readText = (message, connection) => {
          superagent
          .get(`https://code.responsivevoice.org/getvoice.php?t=${message}&tl=de&sv=g1&vn=&pitch=0.5&rate=0.5&vol=1&gender=female`)
          .pipe(stream)
-         
+
          stream.on('finish', () => {
             console.log(`Reading: ${message}`)
             let dispatcher = connection.playFile(fileName)
