@@ -68,6 +68,10 @@ const messageHandler = (client) => {
                            recognizeStream.on('error', (event) => {
                               console.error('Recognition error:', event)
                            })
+
+                           recognizeStream.on('close', () => {
+                              fs.remove(outputFileName)
+                           })
                         })
                      })
                   }
