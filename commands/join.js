@@ -21,10 +21,7 @@ const joinCommand = (client, message, command) => {
       let { voiceChannel } = message.member
       fs.ensureDir(path.join(__dirname, '..', 'cache', 'rec'), () => {
          voiceChannel.join().then((connection) => {
-            let dispatcher = connection.playFile(path.join(__dirname, '..', 'audio', 'silent.wav'))
-            // setTimeout(() => {
-            //    dispatcher.end()
-            // }, 1000)
+            connection.playFile(path.join(__dirname, '..', 'audio', 'silent.wav'))
 
             message.reply(`I'm here!`)
 
