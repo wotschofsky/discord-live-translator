@@ -4,7 +4,7 @@ const path = require('path')
 const textToSpeech = require('../watson/textToSpeech')
 
 
-const readText = (message, connection) => {
+const readText = (message, connection, voice) => {
    return new Promise((resolve) => {
       let pathName = path.join(__dirname, '..', 'cache', 'tts')
       let fileName = path.join(pathName, `${Math.round(Math.random() * 10e5)}_${Date.now()}.wav`)
@@ -13,7 +13,7 @@ const readText = (message, connection) => {
          textToSpeech.synthesize({
             text: message,
             accept: 'audio/wav',
-            voice: 'de-DE_BirgitV2Voice'
+            voice
          }).then((audio) => {
             audio.pipe(stream)
             stream.on('finish', () => {

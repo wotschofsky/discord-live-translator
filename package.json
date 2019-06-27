@@ -12,6 +12,7 @@
     "dotenv": "^8.0.0",
     "fs-extra": "^8.0.1",
     "ibm-watson": "^4.2.1",
+    "lowdb": "^1.0.0",
     "node-opus": "^0.3.2",
     "opusscript": "^0.0.6",
     "streamifier": "^0.1.1",
