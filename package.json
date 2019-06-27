@@ -1,24 +1,28 @@
 {
-  "name": "live-translator",
-  "version": "1.0.0",
-  "main": "app.js",
-  "author": "Felix Wotschofsky",
-  "license": "MIT",
-  "scripts": {
-    "dev": "nodemon app.js"
-  },
-  "dependencies": {
-    "discord.js": "^11.5.1",
-    "dotenv": "^8.0.0",
-    "fs-extra": "^8.0.1",
-    "ibm-watson": "^4.2.1",
-    "lowdb": "^1.0.0",
-    "node-opus": "^0.3.2",
-    "opusscript": "^0.0.6",
-    "streamifier": "^0.1.1",
-    "watson-developer-cloud": "^4.0.1"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.1"
-  }
+   "name": "live-translator",
+   "version": "1.0.0",
+   "main": "app.js",
+   "author": "Felix Wotschofsky",
+   "license": "MIT",
+   "scripts": {
+      "dev": "nodemon app.js"
+   },
+   "dependencies": {
+      "discord.js": "^11.5.1",
+      "dotenv": "^8.0.0",
+      "fs-extra": "^8.0.1",
+      "ibm-watson": "^4.2.1",
+      "lowdb": "^1.0.0",
+      "node-opus": "^0.3.2",
+      "opusscript": "^0.0.6",
+      "watson-developer-cloud": "^4.0.1"
+   },
+   "devDependencies": {
+      "nodemon": "^1.19.1"
+   },
+   "nodemonConfig": {
+      "ignore": [
+         "storage.json"
+      ]
+   }
 }
