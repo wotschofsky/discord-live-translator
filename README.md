@@ -1,4 +1,4 @@
-# discord-live-translator
+# Discord Live Translation Bot
 
 A bot that automatically translate voice chat into a user pickable language in order to provide an easy way to communicate through voice chat for individuals speaking different languages natively.
 
