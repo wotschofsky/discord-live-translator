@@ -2,7 +2,7 @@
    "name": "live-translator",
    "version": "1.0.0",
    "main": "app.js",
-   "author": "Felix Wotschofsky",
+   "author": "knizke",
    "license": "MIT",
    "scripts": {
       "start": "node app.js",
