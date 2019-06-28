@@ -6,7 +6,7 @@ Use `!translation help` for an overview of all available commands.
 
 Note:
 This bot requires api keys for IBM Watson Speech to Text, Text to Speech and Language Translator. Keys are available without a credit card!
-Download your keys from the site and put them in a .env file with their default names along side a discord bot token. This should look something like this:
+Download your keys from the site and put them in a `.env` file with their default names along side a discord bot token. This should look something like this:
 
 ```
 BOT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

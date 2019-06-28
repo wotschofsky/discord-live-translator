@@ -13,6 +13,8 @@ const messageHandler = (client) => {
             case('stop'): require('../commands/stop')(client, message, parsedCommand); break
             case('languages'): require('../commands/languages')(client, message, parsedCommand); break
             case('leave'): require('../commands/leave')(client, message, parsedCommand); break
+            case('status'): require('../commands/status')(client, message, parsedCommand); break
+            case('help'): require('../commands/help')(client, message, parsedCommand); break
             default: require('../commands/notFound')(client, message, parseCommand)
          }
       }
