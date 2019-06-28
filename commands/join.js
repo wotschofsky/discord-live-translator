@@ -11,20 +11,16 @@ const langData = require('../langData.json')
 
 
 const joinCommand = (client, message, command) => {
-   console.log('join')
    if(!message.member.voiceChannel) {
       message.reply('please connect to a voice channel first!')
       return
    }
 
-   if(!message.guild.voiceConnection) {
-      let { voiceChannel } = message.member
-      fs.ensureDir(path.join(__dirname, '..', 'cache', 'rec'), () => {
-         voiceChannel.join().then((connection) => {
-            connection.playFile(path.join(__dirname, '..', 'audio', 'silent.wav'))
-
-            message.reply(`I'm here!`)
-
+   let { voiceChannel } = message.member
+   fs.ensureDir(path.join(__dirname, '..', 'cache', 'rec'), () => {
+      voiceChannel.join().then((connection) => {
+         let dispatcher = connection.playFile(path.join(__dirname, '..', 'audio', 'connect.mp3'))
+         dispatcher.on('end', () => {
             // Based on https://gist.github.com/eslachance/fb70fc036183b7974d3b9191601846ba
             let receiver = connection.createReceiver()
             connection.on('speaking', (user, speaking) => {
@@ -44,12 +40,14 @@ const joinCommand = (client, message, command) => {
                      return translate(result, userPreferences.from, userPreferences.to)
                   }).then((translation) => {
                      readText(translation, connection, langData[userPreferences.to].ttsModel)
+                  }).catch((err) => {
+                     if(err) console.error(err)
                   })
                }
             })
          })
       })
-   }
+   })
 }
 
 

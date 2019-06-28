@@ -5,11 +5,13 @@
    "author": "Felix Wotschofsky",
    "license": "MIT",
    "scripts": {
+      "start": "node app.js",
       "dev": "nodemon app.js"
    },
    "dependencies": {
       "discord.js": "^11.5.1",
       "dotenv": "^8.0.0",
+      "ffmpeg-static": "^2.4.0",
       "fs-extra": "^8.0.1",
       "ibm-watson": "^4.2.1",
       "lowdb": "^1.0.0",

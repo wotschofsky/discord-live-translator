@@ -28,7 +28,7 @@ const startCommand = (client, message, command) => {
       return
    }
 
-   if(!langData[command.params[1]].supports.includes('i')) {
+   if(!langData[command.params[1]].supports.includes('o')) {
       message.reply(`"${command.params[1]}" is not supported as destination language! :x:`)
       return
    }

@@ -8,6 +8,7 @@ const translate = (text, from, to) => {
          text,
          model_id: `${langData[from].translatorCode}-${langData[to].translatorCode}`
       }).then((result) => {
+         console.log(result)
          resolve(result.translations[0].translation)
       }).catch((err) => {
          console.log(err)
