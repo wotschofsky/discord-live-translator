@@ -1,4 +1,4 @@
-Demo video: https://streamable.com/5n1qh
+Demo video: https://streamable.com/adul0
 
 # Discord Live Translation Bot
 
