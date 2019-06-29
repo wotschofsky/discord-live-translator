@@ -1,3 +1,5 @@
+Demo video: https://streamable.com/5n1qh
+
 # Discord Live Translation Bot
 
 A bot that automatically translate voice chat into a user pickable language in order to provide an easy way to communicate through voice chat for individuals speaking different languages natively.
@@ -10,7 +12,10 @@ A bot that automatically translate voice chat into a user pickable language in o
 4. Just talk like normal
 5. When you're done end your session using `!translation stop` and make the bot leave using `!translation leave`
 
-Use `!translation help` for an overview of all available commands.
+Other commands:
+`!translation status` tells you if you have translation mode enabled.
+`!translation languages` shows you all available languages.
+`!translation help` gives you an overview of all available commands.
 
 ## Setup
 This bot requires api keys for IBM Watson Speech to Text, Text to Speech and Language Translator. Keys are available without a credit card!
