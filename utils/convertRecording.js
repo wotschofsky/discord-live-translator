@@ -1,5 +1,4 @@
 const { exec } = require('child_process')
-const fs = require('fs-extra')
 
 
 const convertRecording = (sourceFile, outputFile) => {
@@ -7,7 +6,7 @@ const convertRecording = (sourceFile, outputFile) => {
       exec(`${require('ffmpeg-static').path} -f s32le -ar 44.1k -ac 1 -i ${sourceFile} ${outputFile}`, (err, stdout, stderr) => {
          if(err) reject(err)
          resolve()
-         // fs.remove(sourceFile)
+         fs.remove(sourceFile)
       })
    })
 }
