@@ -1,8 +1,8 @@
 {
-   "name": "live-translator",
+   "name": "discord-live-translator",
    "version": "1.0.0",
    "main": "app.js",
-   "author": "knizke",
+   "author": "feliskio",
    "license": "MIT",
    "scripts": {
       "start": "node app.js",
