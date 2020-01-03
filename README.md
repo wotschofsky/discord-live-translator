@@ -1,5 +1,3 @@
-Demo video: https://streamable.com/adul0
-
 # Discord Live Translation Bot
 
 A bot that automatically translate voice chat into a user selectable language in order to provide an easy way to communicate through voice chat for individuals speaking different languages natively.
