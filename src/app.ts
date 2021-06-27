@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import parseCommand from './utils/parseCommand';
 import validateEnv from './utils/validateEnv';
 
+import joinCommand from './commands/join';
+import leaveCommand from './commands/leave';
 import helpCommand from './commands/help';
 import notFoundCommand from './commands/notFound';
 
@@ -21,6 +23,12 @@ client.on('message', (message) => {
     let parsedCommand = parseCommand(message.content);
 
     switch (parsedCommand.command) {
+      case 'join':
+        joinCommand(client, message, parsedCommand);
+        break;
+      case 'leave':
+        leaveCommand(client, message, parsedCommand);
+        break;
       case 'help':
         helpCommand(client, message, parsedCommand);
         break;
