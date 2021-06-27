@@ -1,6 +1,8 @@
 # Discord Live Translation Bot
 
-A bot that automatically translate voice chat into a user selectable language in order to provide an easy way to communicate through voice chat for individuals speaking different languages natively.
+*This is the documentation for the re-written v2 version. [Original v1 Version](/tree/v1)*
+
+A bot that automatically translate voice chat into a user selectable language in order to provide an easy way to communicate through voice chat for individuals speaking different languages natively. This project was originally started during the 2019 Discord Hack Week hackathon.
 
 ## How to use
 
@@ -15,20 +17,41 @@ Other commands:
 `!translation languages` shows you all available languages.
 `!translation help` gives you an overview of all available commands.
 
-## Setup
+## Setup using Docker
 
-This bot requires api keys for IBM Watson Speech to Text, Text to Speech and Language Translator. Keys are available without a credit card!
-Download your keys from the site and put them in a `.env` file with their default names along side a discord bot token. This should look something like this:
+1. Build the *Dockerfile* located in the root of the project
 
-```env
-BOT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    `$ docker build -t discord-live-translator .`
 
-SPEECH_TO_TEXT_IAM_APIKEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-SPEECH_TO_TEXT_URL=https://stream.watsonplatform.net/speech-to-text/api
+2. Download models and scorers for [Mozilla DeepSpeech](https://github.com/mozilla/DeepSpeech) for all languages you want to support and put them in a *models* directory.
 
-TEXT_TO_SPEECH_IAM_APIKEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-TEXT_TO_SPEECH_URL=https://stream.watsonplatform.net/text-to-speech/api
+3. Optional but highly recommended: Start an instance of [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
 
-LANGUAGE_TRANSLATOR_IAM_APIKEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-LANGUAGE_TRANSLATOR_URL=https://gateway.watsonplatform.net/language-translator/api
+4. Start [containers for Mozilla TTS](https://github.com/synesthesiam/docker-mozillatts) for all languages you want to support
+
+5. Start the discord-live-translator container while providing two volumes: One for the config file and one for the STT models. In addition provide the bot token from the [Discord Developer Portal](https://discord.com/developers/applications) as *BOT_TOKEN* environment variable.
+
+    ```$ docker run -e BOT_TOKEN=xxxxx -v `pwd`/config.json:/app/config.json -v `pwd`/models:/app/models discord-live-translator```
+
+### Example config.json
+
+```json
+{
+  "commandPrefix": "!", // Prefix of choice
+  "translationHost": "http://translator:5000", // LibreTranslate host (use https://libretranslate.com if not self-hosting)
+  "languages": { // Contains all available languages
+    "en": { // Unique language key
+      "icon": ":flag_us:", // Fitting Icon/Emoji
+      "displayName": "English", // Language display name
+      "sttModel": "en/deepspeech-0.9.3-models.pbmm", // DeepSpeech Model file relative to model directory
+      "sttScorer": "en/deepspeech-0.9.3-models.scorer", // DeepSpeech Scorer file relative to model directory
+      "ttsHost": "http://tts:5002", // Address of Mozilla TTS Container
+      "translatorCode": "en", // Language code for LibreTranslate
+      "supports": "io" // Specify whether only input or output or both are supported
+    },
+    ...
+    ...
+    ...
+  }
+}
 ```
