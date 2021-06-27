@@ -33,8 +33,12 @@ client.on('message', (message) => {
 });
 
 client.once('ready', () => {
-  console.log(`Logged in as ${client.user?.tag}!`);
-  client.user?.setActivity('to your beautiful voice', { type: 'LISTENING' });
+  if (client.user) {
+    console.log(`Logged in as ${client.user.tag}!`);
+    client.user.setActivity('your beautiful voice', { type: 'LISTENING' });
+  } else {
+    console.log('Ready but no user available!');
+  }
 });
 
 client.on('error', console.error);
