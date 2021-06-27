@@ -60,5 +60,6 @@ typings/
 # next.js build output
 .next
 
-# app cache directory
+# App specific
 cache/
+config.json
