@@ -1,6 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 
+import convertRecording from '../processors/convertRecording';
 import recordAudio from '../processors/recordAudio';
 import type { CommandHandler } from '../types';
 
@@ -25,7 +26,8 @@ const joinCommand: CommandHandler = async (client, message, command) => {
     dispatcher.on('finish', () => {
       console.log(`Joined ${connection.channel.name}!\n\nREADY TO RECORD\n`);
 
-      recordAudio(connection, (fileName) => {
+      recordAudio(connection, async (fileName) => {
+        const convertedFile = await convertRecording(fileName);
         // TODO Process audio
       });
     });
