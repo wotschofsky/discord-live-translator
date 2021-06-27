@@ -1,4 +1,10 @@
-FROM node:14-alpine
+FROM node:14-slim
+
+# Update environment
+RUN apt-get update; apt-get upgrade -y
+
+# Install FFmpeg
+RUN apt-get install ffmpeg -y
 
 # Set directory
 WORKDIR /app
