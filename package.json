@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@discordjs/opus": "^0.5.3",
+    "axios": "^0.21.1",
     "deepspeech": "^0.9.3",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",

@@ -8,6 +8,7 @@ type Config = {
       displayName: string;
       sttModel: string;
       sttScorer: string;
+      translatorCode: string;
       supports: 'i' | 'o' | 'io' | 'oi';
     };
   };
