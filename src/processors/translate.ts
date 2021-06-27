@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import getConfig from '../utils/getConfig';
+
 const translate = async (text: string, from: string, to: string): Promise<string> => {
   console.log(`Translating "${text}" from ${from} into ${to}...`);
 
@@ -7,8 +9,10 @@ const translate = async (text: string, from: string, to: string): Promise<string
     return '';
   }
 
+  const config = await getConfig();
+
   const response = await axios({
-    url: `${process.env.TRANSLATION_HOST}/translate`,
+    url: `${config.translationHost}/translate`,
     method: 'POST',
     data: {
       q: text,

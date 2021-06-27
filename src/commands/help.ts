@@ -1,8 +1,10 @@
 import commandsRegister from '../register';
+import getConfig from '../utils/getConfig';
 import type { CommandHandler } from '../types';
 
-const helpCommand: CommandHandler = (client, message, command) => {
-  const p = process.env.COMMAND_PREFIX;
+const helpCommand: CommandHandler = async (client, message, command) => {
+  const config = await getConfig();
+  const p = config.commandPrefix;
 
   let response = '';
   for (const command in commandsRegister) {

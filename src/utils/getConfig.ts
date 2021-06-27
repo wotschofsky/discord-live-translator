@@ -2,6 +2,8 @@ import fs from 'fs-extra';
 import path from 'path';
 
 type Config = {
+  commandPrefix: string;
+  translationHost: string;
   languages: {
     [lang: string]: {
       icon: string;

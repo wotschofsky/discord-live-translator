@@ -2,6 +2,7 @@ import Discord from 'discord.js';
 import dotenv from 'dotenv';
 
 import commandsRegister from './register';
+import getConfig from './utils/getConfig';
 import notFoundCommand from './commands/notFound';
 import parseCommand from './utils/parseCommand';
 import validateEnv from './utils/validateEnv';
@@ -11,13 +12,15 @@ validateEnv();
 
 const client = new Discord.Client();
 
-client.on('message', (message) => {
+client.on('message', async (message) => {
   if (message.author.bot) {
     return;
   }
 
-  if (message.content.startsWith(process.env.COMMAND_PREFIX as string)) {
-    let parsedCommand = parseCommand(message.content);
+  const config = await getConfig();
+
+  if (message.content.startsWith(config.commandPrefix)) {
+    let parsedCommand = parseCommand(config.commandPrefix, message.content);
 
     if (parsedCommand.domain !== 'translation') {
       return;

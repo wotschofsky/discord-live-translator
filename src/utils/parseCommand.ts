@@ -4,9 +4,9 @@ type ParsedCommand = {
   params: string[];
 };
 
-const parseCommand = (command: string) => {
-  if (command.startsWith(process.env.COMMAND_PREFIX as string)) {
-    command = command.substr((process.env.COMMAND_PREFIX as string).length);
+const parseCommand = (prefix: string, command: string) => {
+  if (command.startsWith(prefix)) {
+    command = command.substr(prefix.length);
   }
 
   let splitCommand = command.split(' ');
