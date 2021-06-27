@@ -2,6 +2,7 @@ import fs from 'fs-extra';
 import path from 'path';
 
 import convertRecording from '../processors/convertRecording';
+import readText from '../processors/readText';
 import recognizeRecording from '../processors/recognizeRecording';
 import recordAudio from '../processors/recordAudio';
 import settingsStorage from '../utils/settingsStorage';
@@ -39,7 +40,7 @@ const joinCommand: CommandHandler = async (client, message, command) => {
         const convertedFile = await convertRecording(fileName);
         const originalText = await recognizeRecording(convertedFile, userSettings.from);
         const translatedText = await translate(originalText, userSettings.from, userSettings.to);
-        // TODO Process audio
+        await readText(connection, translatedText, userSettings.to);
       });
     });
   } catch (err) {
