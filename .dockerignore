@@ -1,5 +1,7 @@
-.env
+.**
 cache/
 config.json
+Dockerfile
+icons/
 models/
 node_modules/

@@ -24,7 +24,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 # Create cache volume
-VOLUME [ "./cache" ]
+VOLUME [ "/app/cache" ]
 
 # Start app
 CMD yarn start
