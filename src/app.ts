@@ -1,13 +1,10 @@
 import Discord from 'discord.js';
 import dotenv from 'dotenv';
 
+import commandsRegister from './register';
+import notFoundCommand from './commands/notFound';
 import parseCommand from './utils/parseCommand';
 import validateEnv from './utils/validateEnv';
-
-import joinCommand from './commands/join';
-import leaveCommand from './commands/leave';
-import helpCommand from './commands/help';
-import notFoundCommand from './commands/notFound';
 
 dotenv.config();
 validateEnv();
@@ -22,19 +19,15 @@ client.on('message', (message) => {
   if (message.content.startsWith(process.env.COMMAND_PREFIX as string)) {
     let parsedCommand = parseCommand(message.content);
 
-    switch (parsedCommand.command) {
-      case 'join':
-        joinCommand(client, message, parsedCommand);
-        break;
-      case 'leave':
-        leaveCommand(client, message, parsedCommand);
-        break;
-      case 'help':
-        helpCommand(client, message, parsedCommand);
-        break;
-      default:
-        notFoundCommand(client, message, parsedCommand);
-        break;
+    if (parsedCommand.domain !== 'translation') {
+      return;
+    }
+
+    if (parsedCommand.command in commandsRegister) {
+      const { handler } = commandsRegister[parsedCommand.command];
+      handler(client, message, parsedCommand);
+    } else {
+      notFoundCommand(client, message, parsedCommand);
     }
   }
 });
