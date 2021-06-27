@@ -1,4 +1,4 @@
-const requiredValues = ['BOT_TOKEN'];
+const requiredValues = ['COMMAND_PREFIX', 'BOT_TOKEN'];
 
 const validateEnv = () => {
   let failed = false;
