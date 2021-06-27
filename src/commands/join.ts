@@ -26,8 +26,15 @@ const joinCommand: CommandHandler = async (client, message, command) => {
     dispatcher.on('finish', () => {
       console.log(`Joined ${connection.channel.name}!\n\nREADY TO RECORD\n`);
 
-      recordAudio(connection, async (fileName) => {
+      recordAudio(connection, async (fileName, user) => {
+        const userSettings = settingsStorage.get(message.guild?.id as string, user.id);
+
+        if (!userSettings) {
+          return;
+        }
+
         const convertedFile = await convertRecording(fileName);
+        const originalText = await recognizeRecording(convertedFile, userSettings.from);
         // TODO Process audio
       });
     });

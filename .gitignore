@@ -63,3 +63,4 @@ typings/
 # App specific
 cache/
 config.json
+models/

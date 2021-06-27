@@ -1,4 +1,5 @@
 .env
 cache/
 config.json
+models/
 node_modules/

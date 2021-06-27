@@ -6,6 +6,8 @@ type Config = {
     [lang: string]: {
       icon: string;
       displayName: string;
+      sttModel: string;
+      sttScorer: string;
       supports: 'i' | 'o' | 'io' | 'oi';
     };
   };

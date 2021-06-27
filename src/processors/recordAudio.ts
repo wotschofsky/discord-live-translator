@@ -1,8 +1,8 @@
 import fs from 'fs-extra';
 import path from 'path';
-import type { VoiceConnection } from 'discord.js';
+import type { User, VoiceConnection } from 'discord.js';
 
-const recordAudio = (connection: VoiceConnection, callback: (fileName: string) => void) => {
+const recordAudio = (connection: VoiceConnection, callback: (fileName: string, user: User) => void) => {
   const receiver = connection.receiver;
 
   connection.on('speaking', async (user, speaking) => {
@@ -25,7 +25,7 @@ const recordAudio = (connection: VoiceConnection, callback: (fileName: string) =
 
         const { size: fileSize } = await fs.stat(fileName);
         if (fileSize > 0) {
-          callback(fileName);
+          callback(fileName, user);
         } else {
           fs.rm(fileName);
         }
