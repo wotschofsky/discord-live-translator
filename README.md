@@ -1,3 +1,5 @@
+**✨ [NOW AVAILABLE AS FREE HOSTED BOT](https://discord-live-translator.felisk.io/) 🎉**
+
 # Discord Live Translation Bot
 
 *This is the documentation for the re-written v2 version. [Original v1 Version](/tree/v1)*
@@ -18,6 +20,8 @@ Other commands:
 `!translation help` gives you an overview of all available commands.
 
 ## Setup using Docker
+
+If you don't want to use the *free hosted version* of this bot using [Docker](https://www.docker.com/) is the easiest way to host this bot yourself.
 
 1. Build the *Dockerfile* located in the root of the project
 
