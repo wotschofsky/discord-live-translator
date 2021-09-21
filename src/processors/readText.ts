@@ -1,9 +1,10 @@
 import type { VoiceConnection } from 'discord.js';
 
 import getConfig from '../utils/getConfig';
+import writeToLog from '../utils/writeToLog';
 
 const readText = async (connection: VoiceConnection, message: string, lang: string) => {
-  console.log(`Reading "${message}"...`);
+  writeToLog(`Reading "${message}"...`);
 
   const config = await getConfig();
   const host = config.languages[lang].ttsHost;

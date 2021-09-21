@@ -1,8 +1,10 @@
 import ffmpeg from 'fluent-ffmpeg';
 import fs from 'fs-extra';
 
+import writeToLog from '../utils/writeToLog';
+
 const convertRecording = (sourceFile: string): Promise<string> => {
-  console.log(`Converting "${sourceFile}"...`);
+  writeToLog(`Converting "${sourceFile}"...`);
 
   const splitFileName = sourceFile.split('.');
   const outputFile = [...splitFileName.slice(0, -1), 'wav'].join('.');
@@ -16,7 +18,7 @@ const convertRecording = (sourceFile: string): Promise<string> => {
         reject(error);
       })
       .on('end', () => {
-        console.log('Finished processing');
+        writeToLog('Finished processing');
         resolve(outputFile);
         fs.remove(sourceFile);
       })

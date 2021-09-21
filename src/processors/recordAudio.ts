@@ -2,6 +2,8 @@ import fs from 'fs-extra';
 import path from 'path';
 import type { User, VoiceConnection } from 'discord.js';
 
+import writeToLog from '../utils/writeToLog';
+
 const recordAudio = (connection: VoiceConnection, callback: (fileName: string, user: User) => void) => {
   const receiver = connection.receiver;
 
@@ -13,13 +15,13 @@ const recordAudio = (connection: VoiceConnection, callback: (fileName: string, u
     );
 
     if (speaking) {
-      console.log(`${user.tag} started speaking in "${connection.channel.name}" on "${connection.channel.guild.name}"`);
+      writeToLog(`${user.tag} started speaking in "${connection.channel.name}" on "${connection.channel.guild.name}"`);
 
       const audioStream = receiver.createStream(user, { mode: 'pcm' });
       audioStream.pipe(fs.createWriteStream(fileName));
 
       audioStream.on('end', async () => {
-        console.log(
+        writeToLog(
           `${user.tag} stopped speaking in "${connection.channel.name}" on "${connection.channel.guild.name}"`
         );
 

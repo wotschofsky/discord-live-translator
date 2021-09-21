@@ -6,6 +6,7 @@ import getConfig from './utils/getConfig';
 import notFoundCommand from './commands/notFound';
 import parseCommand from './utils/parseCommand';
 import validateEnv from './utils/validateEnv';
+import writeToLog from './utils/writeToLog';
 
 dotenv.config();
 validateEnv();
@@ -37,10 +38,10 @@ client.on('message', async (message) => {
 
 client.once('ready', () => {
   if (client.user) {
-    console.log(`Logged in as ${client.user.tag}!`);
+    writeToLog(`Logged in as ${client.user.tag}!`);
     client.user.setActivity('your beautiful voice', { type: 'LISTENING' });
   } else {
-    console.log('Ready but no user available!');
+    writeToLog('Ready but no user available!');
   }
 });
 

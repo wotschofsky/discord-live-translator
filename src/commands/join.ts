@@ -8,6 +8,7 @@ import recordAudio from '../processors/recordAudio';
 import settingsStorage from '../utils/settingsStorage';
 import translate from '../processors/translate';
 import type { CommandHandler } from '../types';
+import writeToLog from '../utils/writeToLog';
 
 const joinCommand: CommandHandler = async (client, message, command) => {
   if (!message.member || !message.guild) {
@@ -28,7 +29,7 @@ const joinCommand: CommandHandler = async (client, message, command) => {
 
     const dispatcher = connection.play(path.join(__dirname, '../../audio/connect.mp3'));
     dispatcher.on('finish', () => {
-      console.log(`Joined ${connection.channel.name}!\n\nREADY TO RECORD\n`);
+      writeToLog(`Joined ${connection.channel.name}!\n\nREADY TO RECORD\n`);
 
       recordAudio(connection, async (fileName, user) => {
         const userSettings = settingsStorage.get(message.guild?.id as string, user.id);
