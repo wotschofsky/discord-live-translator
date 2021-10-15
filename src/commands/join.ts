@@ -40,6 +40,7 @@ const joinCommand: CommandHandler = async (client, message, command) => {
 
         const convertedFile = await convertRecording(fileName);
         const originalText = await recognizeRecording(convertedFile, userSettings.from);
+        if (!originalText) return;
         const translatedText = await translate(originalText, userSettings.from, userSettings.to);
         await readText(connection, translatedText, userSettings.to);
       });
