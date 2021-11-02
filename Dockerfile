@@ -18,7 +18,8 @@ WORKDIR /app
 # Install node modules
 COPY package.json .
 COPY yarn.lock .
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile && \
+    yarn cache clean
 
 # Copy application files
 COPY . .
