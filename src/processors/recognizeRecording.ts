@@ -1,4 +1,4 @@
-import { Model } from 'deepspeech';
+import { Model } from 'stt';
 import fs from 'fs-extra';
 import path from 'path';
 

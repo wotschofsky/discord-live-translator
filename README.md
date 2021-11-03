@@ -27,7 +27,7 @@ If you don't want to use the *free hosted version* of this bot using [Docker](ht
 
     `$ docker build -t discord-live-translator .`
 
-2. Download models and scorers for [Mozilla DeepSpeech](https://github.com/mozilla/DeepSpeech) for all languages you want to support and put them in a *models* directory.
+2. Download [models and scorers](https://coqui.ai/models) for [Coqui STT](https://github.com/coqui-ai/STT) for all languages you want to support and put them in a *models* directory.
 
 3. Optional but highly recommended: Start an instance of [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
 

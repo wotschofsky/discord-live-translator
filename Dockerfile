@@ -9,9 +9,6 @@ RUN apt-get install ffmpeg -y
 # Install Python and pip
 RUN apt-get install python3 python3-pip -y
 
-# Install Mozilla DeepSpeech
-RUN pip3 install deepspeech
-
 # Set directory
 WORKDIR /app
 
