@@ -25,7 +25,14 @@ const recordAudio = (connection: VoiceConnection, callback: (fileName: string, u
           `${user.tag} stopped speaking in "${connection.channel.name}" on "${connection.channel.guild.name}"`
         );
 
-        const { size: fileSize } = await fs.stat(fileName);
+        let fileSize = 0;
+        try {
+          const fileStat = await fs.stat(fileName);
+          fileSize = fileStat.size;
+        } catch (err) {
+          console.warn(err);
+        }
+
         if (fileSize > 0) {
           callback(fileName, user);
         } else {
