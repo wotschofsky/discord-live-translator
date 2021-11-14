@@ -1,40 +1,31 @@
+import Redis from 'ioredis';
+
 type UserSettings = {
   from: string;
   to: string;
 };
 
 class SettingsStorage {
-  private data: { [guild: string]: { [user: string]: UserSettings } } = {};
+  private redis = new Redis(process.env.REDIS_URL);
 
-  public get(guild: string, user: string): UserSettings | undefined {
-    if (guild in this.data) {
-      if (user in this.data[guild]) {
-        return this.data[guild][user];
-      }
-    }
+  private formatKey(guild: string, user: string) {
+    return `settings.${guild}.${user}`;
   }
 
-  public set(guild: string, user: string, from: string, to: string) {
-    if (!(guild in this.data)) {
-      this.data[guild] = {};
-    }
-
-    this.data[guild][user] = {
-      from: from,
-      to: to
-    };
+  public async get(guild: string, user: string): Promise<UserSettings | undefined> {
+    const key = this.formatKey(guild, user);
+    const data = await this.redis.get(key);
+    return data ? JSON.parse(data) : undefined;
   }
 
-  public delete(guild: string, user: string) {
-    if (!(guild in this.data)) {
-      return;
-    }
+  public async set(guild: string, user: string, from: string, to: string) {
+    const key = this.formatKey(guild, user);
+    await this.redis.set(key, JSON.stringify({ from, to }));
+  }
 
-    delete this.data[guild][user];
-
-    if (Object.keys(this.data[guild]).length === 0) {
-      delete this.data[guild];
-    }
+  public async delete(guild: string, user: string) {
+    const key = this.formatKey(guild, user);
+    await this.redis.del(key);
   }
 }
 

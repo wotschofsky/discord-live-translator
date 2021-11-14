@@ -8,7 +8,7 @@ const statusCommand: CommandHandler = async (client, message, command) => {
     return;
   }
 
-  const prefs = settingsStorage.get(message.guild.id, message.author.id);
+  const prefs = await settingsStorage.get(message.guild.id, message.author.id);
   const config = await getConfig();
 
   if (!prefs) {

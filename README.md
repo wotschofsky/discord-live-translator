@@ -21,7 +21,7 @@ Other commands:
 
 ## Setup using Docker
 
-If you don't want to use the *free hosted version* of this bot using [Docker](https://www.docker.com/) is the easiest way to host this bot yourself.
+If you for whatever reason don't want to use the *free hosted version* of this bot is the easiest way to host this bot yourself is using [Docker](https://www.docker.com/).
 
 1. Build the *Dockerfile* located in the root of the project
 
@@ -29,11 +29,13 @@ If you don't want to use the *free hosted version* of this bot using [Docker](ht
 
 2. Download [models and scorers](https://coqui.ai/models) for [Coqui STT](https://github.com/coqui-ai/STT) for all languages you want to support and put them in a *models* directory.
 
-3. Optional but highly recommended: Start an instance of [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
+3. Set up an instance of [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate).
 
 4. Start [containers for Mozilla TTS](https://github.com/synesthesiam/docker-mozillatts) for all languages you want to support
 
-5. Start the discord-live-translator container while providing two volumes: One for the config file and one for the STT models. In addition provide the bot token from the [Discord Developer Portal](https://discord.com/developers/applications) as *BOT_TOKEN* environment variable.
+5. Start an instance of [Redis](https://redis.io/).
+
+6. Start the discord-live-translator container while providing two volumes: One for the config file and one for the STT models. In addition provide the bot token from the [Discord Developer Portal](https://discord.com/developers/applications) as *BOT_TOKEN* as well as the URL for your Redis instance as *REDIS_URL* environment variables.
 
     ```$ docker run -e BOT_TOKEN=xxxxx -v `pwd`/config.json:/app/config.json -v `pwd`/models:/app/models discord-live-translator```
 

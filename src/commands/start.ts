@@ -44,7 +44,7 @@ const startCommand: CommandHandler = async (client, message, command) => {
     return;
   }
 
-  settingsStorage.set(message.guild.id, message.author.id, command.params[0], command.params[1]);
+  await settingsStorage.set(message.guild.id, message.author.id, command.params[0], command.params[1]);
 
   message.reply('live translation **activated**! :blush:');
 };
