@@ -1,4 +1,4 @@
-import Discord from 'discord.js';
+import Discord, { Intents } from 'discord.js';
 import dotenv from 'dotenv';
 
 import commandsRegister from './register';
@@ -11,9 +11,11 @@ import writeToLog from './utils/writeToLog';
 dotenv.config();
 validateEnv();
 
-const client = new Discord.Client();
+const client = new Discord.Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]
+});
 
-client.on('message', async (message) => {
+client.on('messageCreate', async (message) => {
   if (message.author.bot) {
     return;
   }

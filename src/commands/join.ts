@@ -1,14 +1,20 @@
 import fs from 'fs-extra';
 import path from 'path';
+import {
+  AudioPlayerStatus,
+  createAudioResource,
+  entersState,
+  joinVoiceChannel,
+  VoiceConnectionStatus
+} from '@discordjs/voice';
 
-import convertRecording from '../processors/convertRecording';
+import { audioQueue } from '../utils/AudioQueue';
 import readText from '../processors/readText';
 import recognizeRecording from '../processors/recognizeRecording';
 import recordAudio from '../processors/recordAudio';
 import settingsStorage from '../utils/settingsStorage';
 import translate from '../processors/translate';
 import type { CommandHandler } from '../types';
-import writeToLog from '../utils/writeToLog';
 
 const joinCommand: CommandHandler = async (client, message, command) => {
   if (!message.member || !message.guild) {
@@ -21,31 +27,40 @@ const joinCommand: CommandHandler = async (client, message, command) => {
     return;
   }
 
-  await fs.ensureDir(path.join(__dirname, '../../cache/tts'));
   await fs.ensureDir(path.join(__dirname, '../../cache/rec'));
 
   try {
-    const connection = await message.member.voice.channel.join();
+    const channel = message.member.voice.channel;
+    const connection = joinVoiceChannel({
+      channelId: channel.id,
+      guildId: channel.guild.id,
+      selfDeaf: false,
+      selfMute: false,
+      // @ts-ignore
+      adapterCreator: channel.guild.voiceAdapterCreator
+    });
 
-    const dispatcher = connection.play(path.join(__dirname, '../../audio/connect.mp3'));
-    dispatcher.on('finish', () => {
-      writeToLog(`Joined ${connection.channel.name}!\n\nREADY TO RECORD\n`);
+    await entersState(connection, VoiceConnectionStatus.Ready, 20e3);
 
-      recordAudio(connection, async (fileName, user) => {
-        if (!fs.existsSync(fileName)) {
-          return;
-        }
+    const player = audioQueue.init(connection);
+    player.play(createAudioResource(path.join(__dirname, '../../audio/connect.mp3')));
 
-        const userSettings = await settingsStorage.get(message.guild?.id as string, user.id);
+    player.once(AudioPlayerStatus.Idle, () => {
+      connection.receiver.speaking.on('start', async (userId) => {
+        const userSettings = await settingsStorage.get(message.guild?.id as string, userId);
 
         if (!userSettings) {
           return;
         }
 
-        const convertedFile = await convertRecording(fileName);
-        const originalText = await recognizeRecording(convertedFile, userSettings.from);
+        const fileName = await recordAudio(connection.receiver, userId);
+        if (!fileName) return;
+
+        const originalText = await recognizeRecording(fileName, userSettings.from);
         if (!originalText) return;
+
         const translatedText = await translate(originalText, userSettings.from, userSettings.to);
+
         await readText(connection, translatedText, userSettings.to);
       });
     });

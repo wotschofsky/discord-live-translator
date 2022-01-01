@@ -10,21 +10,23 @@
     "format": "prettier src/** --write"
   },
   "dependencies": {
-    "@discordjs/opus": "^0.5.3",
+    "@discordjs/opus": "^0.7.0",
+    "@discordjs/voice": "^0.7.5",
     "axios": "^0.21.2",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.5.0",
     "dotenv": "^10.0.0",
-    "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^10.0.0",
     "ioredis": "^4.28.0",
+    "libsodium-wrappers": "^0.7.9",
     "stt": "^1.0.0",
-    "ts-node": "^10.0.0"
+    "ts-node": "^10.0.0",
+    "wav": "^1.0.2"
   },
   "devDependencies": {
-    "@types/fluent-ffmpeg": "^2.1.17",
     "@types/fs-extra": "^9.0.11",
     "@types/ioredis": "^4.28.1",
     "@types/node": "^15.12.5",
+    "@types/wav": "^1.0.1",
     "nodemon": "^2.0.7",
     "prettier": "^2.3.2",
     "typescript": "^4.3.4"

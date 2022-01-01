@@ -1,46 +1,57 @@
-import fs from 'fs-extra';
+import { EndBehaviorType, VoiceReceiver } from '@discordjs/voice';
+import { FileWriter } from 'wav';
+import { OpusEncoder } from '@discordjs/opus';
+import { pipeline } from 'stream/promises';
+import { Transform } from 'stream';
 import path from 'path';
-import type { User, VoiceConnection } from 'discord.js';
 
 import writeToLog from '../utils/writeToLog';
 
-const recordAudio = (connection: VoiceConnection, callback: (fileName: string, user: User) => void) => {
-  const receiver = connection.receiver;
+// Based on https://github.com/Yvtq8K3n/BobbyMcLovin/blob/3a007a675d36f61c89e1151293250f6cb0a441b9/index.js
 
-  connection.on('speaking', async (user, speaking) => {
-    const fileName = path.join(
-      __dirname,
-      '../../cache/rec',
-      `${connection.channel.guild.id}_${user.id}_${Date.now()}.pcm`
-    );
+class OpusDecodingStream extends Transform {
+  encoder;
 
-    if (speaking) {
-      writeToLog(`${user.tag} started speaking in "${connection.channel.name}" on "${connection.channel.guild.name}"`);
+  constructor(options: any, encoder: any) {
+    super(options);
+    this.encoder = encoder;
+  }
 
-      const audioStream = receiver.createStream(user, { mode: 'pcm' });
-      audioStream.pipe(fs.createWriteStream(fileName));
+  _transform(data: any, encoding: any, callback: any) {
+    this.push(this.encoder.decode(data));
+    callback();
+  }
+}
 
-      audioStream.on('end', async () => {
-        writeToLog(
-          `${user.tag} stopped speaking in "${connection.channel.name}" on "${connection.channel.guild.name}"`
-        );
+const recordAudio = async (receiver: VoiceReceiver, userId: string): Promise<string | undefined> => {
+  const encoder = new OpusEncoder(16000, 1);
 
-        let fileSize = 0;
-        try {
-          const fileStat = await fs.stat(fileName);
-          fileSize = fileStat.size;
-        } catch (err) {
-          console.warn(err);
-        }
+  const fileName = path.join(__dirname, '../../cache/rec', `${userId}_${Date.now()}.wav`);
 
-        if (fileSize > 0) {
-          callback(fileName, user);
-        } else {
-          fs.rm(fileName);
-        }
-      });
+  const opusStream = receiver.subscribe(userId, {
+    end: {
+      behavior: EndBehaviorType.AfterSilence,
+      duration: 100
     }
   });
+  const decodingStream = new OpusDecodingStream({}, encoder);
+  const fileWriter = new FileWriter(fileName, {
+    channels: 1,
+    sampleRate: 16000
+  });
+
+  writeToLog(`Started recording ${userId} to ${fileName}`);
+
+  try {
+    // @ts-ignore
+    await pipeline(opusStream, decodingStream, fileWriter);
+
+    writeToLog(`Successfully finished recording ${userId} to ${fileName}`);
+
+    return fileName;
+  } catch (err) {
+    writeToLog(`Failed recording ${userId} to ${fileName} - ${err.message}`);
+  }
 };
 
 export default recordAudio;
