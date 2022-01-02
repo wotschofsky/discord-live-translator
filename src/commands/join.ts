@@ -64,12 +64,16 @@ const joinCommand: CommandHandler = async (client, message, command) => {
       }
 
       connection.receiver.speaking.on('start', async (userId) => {
-        const userSettings = await settingsStorage.get(message.guild?.id as string, userId);
+        if (!connection) return;
 
-        if (!userSettings || !connection) return;
-
-        const fileName = await recordAudio(connection.receiver, userId);
+        const fileName = await recordAudio(connection.receiver, userId, async () => {
+          const userSettings = await settingsStorage.get(message.guild?.id as string, userId);
+          return !!userSettings;
+        });
         if (!fileName) return;
+
+        const userSettings = await settingsStorage.get(message.guild?.id as string, userId);
+        if (!userSettings) return;
 
         const originalText = await recognizeRecording(fileName, userSettings.from);
         if (!originalText) return;

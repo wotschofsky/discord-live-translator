@@ -23,7 +23,11 @@ class OpusDecodingStream extends Transform {
   }
 }
 
-const recordAudio = async (receiver: VoiceReceiver, userId: string): Promise<string | undefined> => {
+const recordAudio = async (
+  receiver: VoiceReceiver,
+  userId: string,
+  shouldRecordResolver: (userId: string) => Promise<boolean>
+): Promise<string | undefined> => {
   const encoder = new OpusEncoder(16000, 1);
 
   const fileName = path.join(__dirname, '../../cache/rec', `${userId}_${Date.now()}.wav`);
@@ -39,6 +43,11 @@ const recordAudio = async (receiver: VoiceReceiver, userId: string): Promise<str
     channels: 1,
     sampleRate: 16000
   });
+
+  const shouldRecord = await shouldRecordResolver(userId);
+  if (!shouldRecord) {
+    return;
+  }
 
   writeToLog(`Started recording ${userId} to ${fileName}`);
 
