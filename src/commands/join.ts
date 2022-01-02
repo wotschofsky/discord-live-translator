@@ -4,6 +4,7 @@ import {
   AudioPlayerStatus,
   createAudioResource,
   entersState,
+  getVoiceConnection,
   joinVoiceChannel,
   VoiceConnectionStatus
 } from '@discordjs/voice';
@@ -31,14 +32,26 @@ const joinCommand: CommandHandler = async (client, message, command) => {
 
   try {
     const channel = message.member.voice.channel;
-    const connection = joinVoiceChannel({
-      channelId: channel.id,
-      guildId: channel.guild.id,
-      selfDeaf: false,
-      selfMute: false,
-      // @ts-ignore
-      adapterCreator: channel.guild.voiceAdapterCreator
-    });
+
+    let isNewConnection = false;
+    let connection = getVoiceConnection(message.guild.id);
+    if (!connection) {
+      isNewConnection = true;
+      connection = joinVoiceChannel({
+        channelId: channel.id,
+        guildId: channel.guild.id,
+        selfDeaf: false,
+        selfMute: false,
+        // @ts-ignore
+        adapterCreator: channel.guild.voiceAdapterCreator
+      });
+    } else {
+      connection.rejoin({
+        channelId: channel.id,
+        selfDeaf: false,
+        selfMute: false
+      });
+    }
 
     await entersState(connection, VoiceConnectionStatus.Ready, 20e3);
 
@@ -46,12 +59,14 @@ const joinCommand: CommandHandler = async (client, message, command) => {
     player.play(createAudioResource(path.join(__dirname, '../../audio/connect.mp3')));
 
     player.once(AudioPlayerStatus.Idle, () => {
+      if (!isNewConnection || !connection) {
+        return;
+      }
+
       connection.receiver.speaking.on('start', async (userId) => {
         const userSettings = await settingsStorage.get(message.guild?.id as string, userId);
 
-        if (!userSettings) {
-          return;
-        }
+        if (!userSettings || !connection) return;
 
         const fileName = await recordAudio(connection.receiver, userId);
         if (!fileName) return;
