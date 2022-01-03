@@ -1,15 +1,19 @@
+import { SlashCommandBuilder } from '@discordjs/builders';
+
 import getConfig from '../utils/getConfig';
 import type { CommandHandler } from '../types';
 
 const config = getConfig();
 
-const languagesCommand: CommandHandler = (client, message, command) => {
-  let response = 'Available languages:';
+export const languagesCommand = new SlashCommandBuilder()
+  .setName('languages')
+  .setDescription('Show all available languages');
+
+export const languagesCommandHandler: CommandHandler = async (interaction) => {
+  let response = '**Available languages:**';
   for (let key in config.languages) {
     response += `\n${config.languages[key].icon}  ${key} *(${config.languages[key].displayName})*`;
   }
 
-  message.channel.send(response);
+  await interaction.reply(response);
 };
-
-export default languagesCommand;

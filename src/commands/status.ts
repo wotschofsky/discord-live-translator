@@ -1,26 +1,31 @@
+import { SlashCommandBuilder } from '@discordjs/builders';
+
 import getConfig from '../utils/getConfig';
 import settingsStorage from '../utils/settingsStorage';
 import type { CommandHandler } from '../types';
 
 const config = getConfig();
 
-const statusCommand: CommandHandler = async (client, message, command) => {
-  if (!message.member || !message.guild) {
-    message.reply('an error occurred!');
+export const statusCommand = new SlashCommandBuilder().setName('status').setDescription('Show your current settings');
+
+export const statusCommandHandler: CommandHandler = async (interaction) => {
+  await interaction.deferReply();
+
+  if (!interaction.member || !interaction.guild) {
+    await interaction.editReply('An error occurred! :grimacing:');
     return;
   }
 
-  const prefs = await settingsStorage.get(message.guild.id, message.author.id);
+  const prefs = await settingsStorage.get(interaction.guild.id, interaction.user.id);
 
   if (!prefs) {
-    message.reply('you currently have **not activated** live translation! :cry:');
+    await interaction.editReply('You currently have not activated live translation! :sleeping:');
   } else {
-    message.reply(
-      `you are currently translating **from ${config.languages[
-        prefs.from
-      ].displayName.toLowerCase()} to ${config.languages[prefs.to].displayName.toLowerCase()}**! :sunglasses:`
+    const fromLanguage = config.languages[prefs.from];
+    const toLanguage = config.languages[prefs.to];
+
+    await interaction.editReply(
+      `You are currently translating from ${fromLanguage.icon} ${fromLanguage.displayName} to ${toLanguage.icon} ${toLanguage.displayName}! :thumbsup:`
     );
   }
 };
-
-export default statusCommand;

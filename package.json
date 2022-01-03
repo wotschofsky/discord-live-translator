@@ -10,9 +10,12 @@
     "format": "prettier src/** --write"
   },
   "dependencies": {
+    "@discordjs/builders": "^0.11.0",
     "@discordjs/opus": "^0.7.0",
+    "@discordjs/rest": "^0.2.0-canary.0",
     "@discordjs/voice": "^0.7.5",
     "axios": "^0.21.2",
+    "discord-api-types": "^0.26.1",
     "discord.js": "^13.5.0",
     "dotenv": "^10.0.0",
     "fs-extra": "^10.0.0",

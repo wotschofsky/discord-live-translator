@@ -1,10 +1,13 @@
 import Discord, { Intents } from 'discord.js';
 import dotenv from 'dotenv';
 
-import commandsRegister from './register';
-import getConfig from './utils/getConfig';
-import notFoundCommand from './commands/notFound';
-import parseCommand from './utils/parseCommand';
+import { initGlobalCommands, initGuildCommands } from './interactions';
+import { joinCommandHandler } from './commands/join';
+import { languagesCommandHandler } from './commands/languages';
+import { leaveCommandHandler } from './commands/leave';
+import { startCommandHandler } from './commands/start';
+import { statusCommandHandler } from './commands/status';
+import { stopCommandHandler } from './commands/stop';
 import validateEnv from './utils/validateEnv';
 import writeToLog from './utils/writeToLog';
 
@@ -15,26 +18,37 @@ const client = new Discord.Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]
 });
 
-client.on('messageCreate', async (message) => {
-  if (message.author.bot) {
-    return;
+client.on('interactionCreate', (interaction) => {
+  if (!interaction.isCommand()) return;
+
+  switch (interaction.commandName) {
+    case 'join':
+      joinCommandHandler(interaction);
+      break;
+    case 'languages':
+      languagesCommandHandler(interaction);
+      break;
+    case 'leave':
+      leaveCommandHandler(interaction);
+      break;
+    case 'start':
+      startCommandHandler(interaction);
+      break;
+    case 'status':
+      statusCommandHandler(interaction);
+      break;
+    case 'stop':
+      stopCommandHandler(interaction);
+      break;
   }
+});
 
-  const config = await getConfig();
-
-  if (message.content.startsWith(config.commandPrefix)) {
-    let parsedCommand = parseCommand(config.commandPrefix, message.content);
-
-    if (parsedCommand.domain !== 'translation') {
-      return;
-    }
-
-    if (parsedCommand.command in commandsRegister) {
-      const { handler } = commandsRegister[parsedCommand.command];
-      handler(client, message, parsedCommand);
-    } else {
-      notFoundCommand(client, message, parsedCommand);
-    }
+client.on('messageCreate', async (message) => {
+  if (
+    !message.author.bot &&
+    (message.content.trim() === '!translation' || message.content.trim().startsWith('!translation '))
+  ) {
+    message.reply('The `!translation` command is no longer supported - use slash commands instead! :x:');
   }
 });
 
@@ -50,3 +64,9 @@ client.once('ready', () => {
 client.on('error', console.error);
 
 client.login(process.env.BOT_TOKEN);
+
+if (process.env.GUILD_ID) {
+  initGuildCommands(process.env.BOT_TOKEN as string, process.env.CLIENT_ID as string, process.env.GUILD_ID as string);
+} else {
+  initGlobalCommands(process.env.BOT_TOKEN as string, process.env.CLIENT_ID as string);
+}

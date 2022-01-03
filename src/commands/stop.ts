@@ -1,15 +1,24 @@
+import { SlashCommandBuilder } from '@discordjs/builders';
+
 import settingsStorage from '../utils/settingsStorage';
 import type { CommandHandler } from '../types';
 
-const stopCommand: CommandHandler = async (client, message, command) => {
-  if (!message.member || !message.guild) {
-    message.reply('an error occurred!');
+export const stopCommand = new SlashCommandBuilder().setName('stop').setDescription('Stop the translation');
+
+export const stopCommandHandler: CommandHandler = async (interaction) => {
+  await interaction.deferReply();
+
+  if (!interaction.member || !interaction.guild) {
+    await interaction.editReply('An error occurred! :grimacing:');
     return;
   }
 
-  await settingsStorage.delete(message.guild.id, message.author.id);
+  try {
+    await settingsStorage.delete(interaction.guild.id, interaction.user.id);
+  } catch (err) {
+    console.error(err);
+    await interaction.editReply('An error occurred! :grimacing:');
+  }
 
-  message.reply('live translation **deactivated**! :sleeping:');
+  await interaction.editReply('Live translation deactivated! :sleeping:');
 };
-
-export default stopCommand;

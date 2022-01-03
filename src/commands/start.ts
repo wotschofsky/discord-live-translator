@@ -1,52 +1,69 @@
+import { SlashCommandBuilder } from '@discordjs/builders';
+
 import getConfig from '../utils/getConfig';
 import settingsStorage from '../utils/settingsStorage';
 import type { CommandHandler } from '../types';
 
 const config = getConfig();
 
-const startCommand: CommandHandler = async (client, message, command) => {
-  if (!message.member || !message.guild) {
-    message.reply('an error occurred!');
+const languageChoices: [name: string, value: string][] = Object.keys(config.languages).map((key) => [
+  config.languages[key].displayName,
+  key
+]);
+const inputLanguageChoices = languageChoices.filter(([name, value]) => config.languages[value].supports.includes('i'));
+const outputLanguageChoices = languageChoices.filter(([name, value]) => config.languages[value].supports.includes('o'));
+
+export const startCommand = new SlashCommandBuilder()
+  .setName('start')
+  .setDescription('Start the translation')
+  .addStringOption((option) =>
+    option.setName('from').setDescription('From Language').addChoices(inputLanguageChoices).setRequired(true)
+  )
+  .addStringOption((option) =>
+    option.setName('to').setDescription('To Language').addChoices(outputLanguageChoices).setRequired(true)
+  );
+
+export const startCommandHandler: CommandHandler = async (interaction) => {
+  await interaction.deferReply();
+
+  if (!interaction.member || !interaction.guild) {
+    await interaction.editReply('An error occurred! :grimacing:');
     return;
   }
 
-  if (command.params.length < 2) {
-    message.reply('Invalid format! :x: Format: !translation start <from> <to>');
+  const fromLanguage = interaction.options.getString('from') as string;
+  const toLanguage = interaction.options.getString('to') as string;
+
+  if (fromLanguage === toLanguage) {
+    await interaction.editReply('Source and target language may not be the same! :x:');
     return;
   }
 
-  if (command.params[0] === command.params[1]) {
-    message.reply('source and destination language may not be the same! :x:');
-    return;
-  }
-
-  if (!(command.params[0] in config.languages)) {
-    message.reply(
-      `"${command.params[0]}" is not a supported language! Use "!translation languages" for a list of supported ones. :x:`
+  if (!(fromLanguage in config.languages)) {
+    await interaction.editReply(
+      `"${fromLanguage}" is not a supported language! Use "/languages" for a list of supported ones. :x:`
     );
     return;
   }
 
-  if (!(command.params[1] in config.languages)) {
-    message.reply(
-      `"${command.params[1]}" is not a supported language! Use "!translation languages" for a list of supported ones. :x:`
+  if (!(toLanguage in config.languages)) {
+    await interaction.editReply(
+      `"${toLanguage}" is not a supported language! Use "/languages" for a list of supported ones. :x:`
     );
     return;
   }
 
-  if (!config.languages[command.params[0]].supports.includes('i')) {
-    message.reply(`"${command.params[0]}" is not supported as source language! :x:`);
+  if (!config.languages[fromLanguage].supports.includes('i')) {
+    await interaction.editReply(`"${fromLanguage}" is not supported as source language! :x:`);
     return;
   }
 
-  if (!config.languages[command.params[1]].supports.includes('o')) {
-    message.reply(`"${command.params[1]}" is not supported as destination language! :x:`);
+  if (!config.languages[toLanguage].supports.includes('o')) {
+    await interaction.editReply(`"${toLanguage}" is not supported as destination language! :x:`);
     return;
   }
 
-  await settingsStorage.set(message.guild.id, message.author.id, command.params[0], command.params[1]);
+  await settingsStorage.set(interaction.guild.id, interaction.user.id, fromLanguage, toLanguage);
 
-  message.reply('live translation **activated**! :blush:');
+  await interaction.editReply('Live translation activated! :thumbsup:');
 };
-
-export default startCommand;
