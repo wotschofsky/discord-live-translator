@@ -5,16 +5,16 @@ import path from 'path';
 import getConfig from '../utils/getConfig';
 import writeToLog from '../utils/writeToLog';
 
+const config = getConfig();
+
 const ds: Record<string, Model> = {};
 
-getConfig().then((config) => {
-  for (const lang in config.languages) {
-    const langDetails = config.languages[lang];
-    writeToLog(`Initializing STT model for ${langDetails.displayName}...`);
-    ds[lang] = new Model(path.join(__dirname, '../../models', langDetails.sttModel));
-    ds[lang].enableExternalScorer(path.join(__dirname, '../../models', langDetails.sttScorer));
-  }
-});
+for (const lang in config.languages) {
+  const langDetails = config.languages[lang];
+  writeToLog(`Initializing STT model for ${langDetails.displayName}...`);
+  ds[lang] = new Model(path.join(__dirname, '../../models', langDetails.sttModel));
+  ds[lang].enableExternalScorer(path.join(__dirname, '../../models', langDetails.sttScorer));
+}
 
 const recognizeRecording = async (fileName: string, lang: string) => {
   writeToLog(`Analyzing "${fileName}"...`);

@@ -2,6 +2,8 @@ import getConfig from '../utils/getConfig';
 import settingsStorage from '../utils/settingsStorage';
 import type { CommandHandler } from '../types';
 
+const config = getConfig();
+
 const statusCommand: CommandHandler = async (client, message, command) => {
   if (!message.member || !message.guild) {
     message.reply('an error occurred!');
@@ -9,7 +11,6 @@ const statusCommand: CommandHandler = async (client, message, command) => {
   }
 
   const prefs = await settingsStorage.get(message.guild.id, message.author.id);
-  const config = await getConfig();
 
   if (!prefs) {
     message.reply('you currently have **not activated** live translation! :cry:');

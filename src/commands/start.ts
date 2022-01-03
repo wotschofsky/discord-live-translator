@@ -2,6 +2,8 @@ import getConfig from '../utils/getConfig';
 import settingsStorage from '../utils/settingsStorage';
 import type { CommandHandler } from '../types';
 
+const config = getConfig();
+
 const startCommand: CommandHandler = async (client, message, command) => {
   if (!message.member || !message.guild) {
     message.reply('an error occurred!');
@@ -17,8 +19,6 @@ const startCommand: CommandHandler = async (client, message, command) => {
     message.reply('source and destination language may not be the same! :x:');
     return;
   }
-
-  const config = await getConfig();
 
   if (!(command.params[0] in config.languages)) {
     message.reply(
