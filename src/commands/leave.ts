@@ -18,15 +18,20 @@ export const leaveCommandHandler: CommandHandler = async (interaction) => {
     return;
   }
 
+  const connection = getVoiceConnection(interaction.guildId);
+
+  if (!connection) {
+    await interaction.editReply('The bot currently is not connected to a voice channel! :x:');
+    return;
+  }
+
   if (!interaction.member.voice.channel) {
     await interaction.editReply('You are currently not in a voice channel! :x:');
     return;
   }
 
-  const connection = getVoiceConnection(interaction.guildId);
-
-  if (!connection) {
-    await interaction.editReply('The bot currently is not connected to a voice channel! :x:');
+  if (interaction.member.voice.channel.id !== connection.joinConfig.channelId) {
+    await interaction.editReply('You are currently not in the same voice channel as the bot is in! :x:');
     return;
   }
 
