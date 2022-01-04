@@ -48,7 +48,10 @@ client.on('messageCreate', async (message) => {
     !message.author.bot &&
     (message.content.trim() === '!translation' || message.content.trim().startsWith('!translation '))
   ) {
-    message.reply('The `!translation` command is no longer supported - use slash commands instead! :x:');
+    message.reply(
+      'The `!translation` command is no longer supported - use slash commands instead! :x:\n' +
+        'If the commands are not available, please reinvite the bot by visiting https://discord-live-translator.felisk.io/'
+    );
   }
 });
 
