@@ -76,10 +76,7 @@ export const joinCommandHandler: CommandHandler = async (interaction) => {
       connection.receiver.speaking.on('start', async (userId) => {
         if (!connection) return;
 
-        const fileName = await recordAudio(connection.receiver, userId, async () => {
-          const userSettings = await settingsStorage.get(interaction.guildId as string, userId);
-          return !!userSettings;
-        });
+        const fileName = await recordAudio(connection.receiver, userId);
         if (!fileName) return;
 
         const userSettings = await settingsStorage.get(interaction.guildId as string, userId);
