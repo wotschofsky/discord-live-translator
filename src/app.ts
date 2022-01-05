@@ -68,8 +68,6 @@ client.on('error', console.error);
 
 client.login(process.env.BOT_TOKEN);
 
-if (process.env.GUILD_ID) {
+if (process.env.CLIENT_ID && process.env.GUILD_ID) {
   initGuildCommands(process.env.BOT_TOKEN as string, process.env.CLIENT_ID as string, process.env.GUILD_ID as string);
-} else {
-  initGlobalCommands(process.env.BOT_TOKEN as string, process.env.CLIENT_ID as string);
 }
