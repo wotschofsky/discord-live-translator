@@ -1,4 +1,4 @@
-import Discord, { Intents } from 'discord.js';
+import Discord, { Intents, Permissions } from 'discord.js';
 import dotenv from 'dotenv';
 
 import { initGlobalCommands, initGuildCommands } from './interactions';
@@ -48,10 +48,16 @@ client.on('messageCreate', async (message) => {
     !message.author.bot &&
     (message.content.trim() === '!translation' || message.content.trim().startsWith('!translation '))
   ) {
-    message.reply(
-      'The `!translation` command is no longer supported - use slash commands instead! :x:\n' +
-        'If the commands are not available, please reinvite the bot by visiting https://discord-live-translator.felisk.io/'
-    );
+    if (
+      message.guild?.me
+        ?.permissionsIn(message.channel.id)
+        .has([Permissions.FLAGS.READ_MESSAGE_HISTORY, Permissions.FLAGS.SEND_MESSAGES])
+    ) {
+      message.reply(
+        'The `!translation` command is no longer supported - use slash commands instead! :x:\n' +
+          'If the commands are not available, please reinvite the bot by visiting https://discord-live-translator.felisk.io/'
+      );
+    }
   }
 });
 
