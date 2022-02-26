@@ -25,15 +25,13 @@ export const joinCommand = new SlashCommandBuilder()
   .setDescription('Move the bot into your voice channel');
 
 export const joinCommandHandler: CommandHandler = async (interaction) => {
-  await interaction.deferReply();
-
   if (!interaction.member || !isGuildMember(interaction.member) || !interaction.guild) {
-    await interaction.editReply('An error occurred! :grimacing:');
+    await interaction.reply({ content: 'An error occurred! :grimacing:', ephemeral: true });
     return;
   }
 
   if (!interaction.member.voice.channel) {
-    await interaction.editReply('You are currently not in a voice channel! :x:');
+    await interaction.reply({ content: 'You are currently not in a voice channel! :x:', ephemeral: true });
     return;
   }
 
@@ -42,10 +40,14 @@ export const joinCommandHandler: CommandHandler = async (interaction) => {
       ?.permissionsIn(interaction.member.voice.channel)
       .has([Permissions.FLAGS.CONNECT, Permissions.FLAGS.SPEAK])
   ) {
-    await interaction.editReply('The bot is missing permission for your channel to connect and/or speak! :grimacing:');
+    await interaction.reply({
+      content: 'The bot is missing permission for your channel to connect and/or speak! :grimacing:',
+      ephemeral: true
+    });
     return;
   }
 
+  await interaction.deferReply();
   await fs.ensureDir(path.join(__dirname, '../../cache/rec'));
 
   try {

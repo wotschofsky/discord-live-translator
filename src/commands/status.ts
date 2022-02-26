@@ -9,7 +9,7 @@ const config = getConfig();
 export const statusCommand = new SlashCommandBuilder().setName('status').setDescription('Show your current settings');
 
 export const statusCommandHandler: CommandHandler = async (interaction) => {
-  await interaction.deferReply();
+  await interaction.deferReply({ ephemeral: true });
 
   if (!interaction.member || !interaction.guild) {
     await interaction.editReply('An error occurred! :grimacing:');

@@ -24,7 +24,7 @@ export const startCommand = new SlashCommandBuilder()
   );
 
 export const startCommandHandler: CommandHandler = async (interaction) => {
-  await interaction.deferReply();
+  await interaction.deferReply({ ephemeral: true });
 
   if (!interaction.member || !interaction.guild) {
     await interaction.editReply('An error occurred! :grimacing:');

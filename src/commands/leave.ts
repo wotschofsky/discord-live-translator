@@ -11,29 +11,32 @@ export const leaveCommand = new SlashCommandBuilder()
   .setDescription('Move the bot out of your voice channel');
 
 export const leaveCommandHandler: CommandHandler = async (interaction) => {
-  await interaction.deferReply();
-
   if (!interaction.member || !isGuildMember(interaction.member) || !interaction.guildId) {
-    await interaction.editReply('An error occurred! :grimacing:');
+    await interaction.reply({ content: 'An error occurred! :grimacing:', ephemeral: true });
     return;
   }
 
   const connection = getVoiceConnection(interaction.guildId);
 
   if (!connection) {
-    await interaction.editReply('The bot currently is not connected to a voice channel! :x:');
+    await interaction.reply({ content: 'The bot currently is not connected to a voice channel! :x:', ephemeral: true });
     return;
   }
 
   if (!interaction.member.voice.channel) {
-    await interaction.editReply('You are currently not in a voice channel! :x:');
+    await interaction.reply({ content: 'You are currently not in a voice channel! :x:', ephemeral: true });
     return;
   }
 
   if (interaction.member.voice.channel.id !== connection.joinConfig.channelId) {
-    await interaction.editReply('You are currently not in the same voice channel as the bot is in! :x:');
+    await interaction.reply({
+      content: 'You are currently not in the same voice channel as the bot is in! :x:',
+      ephemeral: true
+    });
     return;
   }
+
+  await interaction.deferReply();
 
   if (connection) {
     const player = audioQueue.players.get(interaction.guildId);

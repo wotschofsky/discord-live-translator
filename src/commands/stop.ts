@@ -6,7 +6,7 @@ import type { CommandHandler } from '../types';
 export const stopCommand = new SlashCommandBuilder().setName('stop').setDescription('Stop the translation');
 
 export const stopCommandHandler: CommandHandler = async (interaction) => {
-  await interaction.deferReply();
+  await interaction.deferReply({ ephemeral: true });
 
   if (!interaction.member || !interaction.guild) {
     await interaction.editReply('An error occurred! :grimacing:');

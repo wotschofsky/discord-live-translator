@@ -15,5 +15,5 @@ export const languagesCommandHandler: CommandHandler = async (interaction) => {
     response += `\n${config.languages[key].icon}  ${key} *(${config.languages[key].displayName})*`;
   }
 
-  await interaction.reply(response);
+  await interaction.reply({ content: response, ephemeral: true });
 };
