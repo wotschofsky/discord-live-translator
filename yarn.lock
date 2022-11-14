@@ -797,14 +797,7 @@ mime-types@^2.1.12:
   dependencies:
     mime-db "1.44.0"
 
-minimatch@^3.0.4:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
-  integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
-  dependencies:
-    brace-expansion "^1.1.7"
-
-minimatch@^3.1.2:
+minimatch@^3.0.4, minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
@@ -1313,10 +1306,10 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-stt@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/stt/-/stt-1.0.0.tgz#2475383faf088cab85759817d36186e7ce595872"
-  integrity sha512-+1P7KWqQ0xg92k1KZ/Kw8KAXRIZUEUykPnwpTacYL/CROx5vmzEAjxFsb09boMPbcnvjXV5wTA2hXnNkkJZwTw==
+stt@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/stt/-/stt-1.4.0.tgz#335aae724d486efc7b9face5510190b2765ef78a"
+  integrity sha512-/74ZFDpuJJKfnkfyUibumUwfK6d6HfD9D3VYwVNYZjcMRwNZqVWV6WeWWauM52xmQf8LGLeseRsfCZIh4nXv1A==
   dependencies:
     argparse "1.0.x"
     memory-stream "1.0.x"
