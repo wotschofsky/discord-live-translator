@@ -1,7 +1,7 @@
 import Discord, { Intents, Permissions } from 'discord.js';
 import dotenv from 'dotenv';
 
-import { initGlobalCommands, initGuildCommands } from './interactions';
+import { initGuildCommands } from './interactions';
 import { joinCommandHandler } from './commands/join';
 import { languagesCommandHandler } from './commands/languages';
 import { leaveCommandHandler } from './commands/leave';
