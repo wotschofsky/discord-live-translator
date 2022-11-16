@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 
 type Config = {
@@ -16,6 +17,14 @@ type Config = {
   };
 };
 
-const getConfig = (): Config => require(path.join(__dirname, '../../config.json'));
+let config: Config | null = null;
+
+const getConfig = (): Config => {
+  if (!config) {
+    const configPath = path.join(__dirname, '../../config.json');
+    config = JSON.parse(fs.readFileSync(configPath, 'utf8')) as Config;
+  }
+  return config;
+};
 
 export default getConfig;
