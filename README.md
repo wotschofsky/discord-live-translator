@@ -43,7 +43,6 @@ If you for whatever reason don't want to use the *free hosted version* of this b
 
 ```json
 {
-  "commandPrefix": "!", // Prefix of choice
   "translationHost": "http://translator:5000", // LibreTranslate host (use https://libretranslate.com if not self-hosting)
   "languages": { // Contains all available languages
     "en": { // Unique language key
