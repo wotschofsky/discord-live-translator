@@ -5,7 +5,8 @@
   "author": "Felix Wotschofsky <hello@felisk.io>",
   "license": "GPL-3.0-only",
   "scripts": {
-    "start": "ts-node src/app.ts",
+    "build": "tsc",
+    "start": "node src/app.js",
     "dev": "nodemon",
     "format": "prettier src/** --write"
   },

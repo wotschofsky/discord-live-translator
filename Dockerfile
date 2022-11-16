@@ -21,6 +21,9 @@ RUN yarn install --frozen-lockfile && \
 # Copy application files
 COPY . .
 
+# Build application
+RUN yarn build
+
 # Create cache volume
 VOLUME [ "/app/cache" ]
 
