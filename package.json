@@ -1,7 +1,7 @@
 {
   "name": "discord-live-translator",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "src/app.ts",
   "author": "Felix Wotschofsky <hello@felisk.io>",
   "license": "GPL-3.0-only",
   "scripts": {
