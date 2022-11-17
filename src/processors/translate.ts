@@ -1,34 +1,28 @@
+import axios from 'axios';
+
 import getConfig from '../utils/getConfig';
 import writeToLog from '../utils/writeToLog';
 
 const config = getConfig();
 
 const translate = async (text: string, from: string, to: string): Promise<string> => {
-  const fetch = await import('node-fetch').then((m) => m.default);
-
   writeToLog(`Translating "${text}" from ${from} into ${to}...`);
 
   if (!text) {
     return '';
   }
 
-  const response = await fetch(`${config.translationHost}/translate`, {
+  const response = await axios({
+    url: `${config.translationHost}/translate`,
     method: 'POST',
-    body: JSON.stringify({
+    data: {
       q: text,
       source: from,
       target: to
-    })
+    }
   });
 
-  if (!response.ok) {
-    console.error('Error while translating:', response);
-    return '';
-  }
-
-  const data = (await response.json()) as Record<string, any>;
-
-  return data.translatedText;
+  return response.data.translatedText;
 };
 
 export default translate;
