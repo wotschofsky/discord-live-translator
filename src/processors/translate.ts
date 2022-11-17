@@ -1,11 +1,11 @@
-import fetch from 'node-fetch';
-
 import getConfig from '../utils/getConfig';
 import writeToLog from '../utils/writeToLog';
 
 const config = getConfig();
 
 const translate = async (text: string, from: string, to: string): Promise<string> => {
+  const fetch = await import('node-fetch').then((m) => m.default);
+
   writeToLog(`Translating "${text}" from ${from} into ${to}...`);
 
   if (!text) {
