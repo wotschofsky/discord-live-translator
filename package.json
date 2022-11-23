@@ -6,7 +6,7 @@
   "license": "GPL-3.0-only",
   "scripts": {
     "build": "tsc",
-    "start": "node src/app.js",
+    "start": "node -r source-map-support/register src/app.js",
     "dev": "nodemon",
     "format": "prettier src/** --write"
   },
@@ -22,6 +22,7 @@
     "fs-extra": "^10.0.0",
     "ioredis": "^4.28.0",
     "libsodium-wrappers": "^0.7.9",
+    "source-map-support": "^0.5.21",
     "stt": "^1.4.0",
     "ts-node": "^10.0.0",
     "wav": "^1.0.2"
