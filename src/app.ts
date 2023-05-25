@@ -14,27 +14,27 @@ const client = new Discord.Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]
 });
 
-client.on('interactionCreate', (interaction) => {
+client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return;
 
   switch (interaction.commandName) {
     case 'join':
-      joinCommandHandler(interaction);
+      await joinCommandHandler(interaction);
       break;
     case 'languages':
-      languagesCommandHandler(interaction);
+      await languagesCommandHandler(interaction);
       break;
     case 'leave':
-      leaveCommandHandler(interaction);
+      await leaveCommandHandler(interaction);
       break;
     case 'start':
-      startCommandHandler(interaction);
+      await startCommandHandler(interaction);
       break;
     case 'status':
-      statusCommandHandler(interaction);
+      await statusCommandHandler(interaction);
       break;
     case 'stop':
-      stopCommandHandler(interaction);
+      await stopCommandHandler(interaction);
       break;
   }
 });
@@ -71,5 +71,9 @@ client.on('error', console.error);
 client.login(env.BOT_TOKEN);
 
 if (env.CLIENT_ID && env.GUILD_ID) {
-  initGuildCommands(env.BOT_TOKEN as string, env.CLIENT_ID, env.GUILD_ID);
+  initGuildCommands(env.BOT_TOKEN as string, env.CLIENT_ID, env.GUILD_ID)
+    .then(() => {
+      console.log('Successfully initialized guild commands!');
+    })
+    .catch(console.error);
 }
