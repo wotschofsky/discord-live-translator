@@ -1,5 +1,4 @@
 import Discord, { Intents, Permissions } from 'discord.js';
-import dotenv from 'dotenv';
 
 import { initGuildCommands } from './interactions';
 import { joinCommandHandler } from './commands/join';
@@ -8,11 +7,8 @@ import { leaveCommandHandler } from './commands/leave';
 import { startCommandHandler } from './commands/start';
 import { statusCommandHandler } from './commands/status';
 import { stopCommandHandler } from './commands/stop';
-import validateEnv from './utils/validateEnv';
+import env from './env';
 import writeToLog from './utils/writeToLog';
-
-dotenv.config();
-validateEnv();
 
 const client = new Discord.Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]
@@ -72,8 +68,8 @@ client.once('ready', () => {
 
 client.on('error', console.error);
 
-client.login(process.env.BOT_TOKEN);
+client.login(env.BOT_TOKEN);
 
-if (process.env.CLIENT_ID && process.env.GUILD_ID) {
-  initGuildCommands(process.env.BOT_TOKEN as string, process.env.CLIENT_ID as string, process.env.GUILD_ID as string);
+if (env.CLIENT_ID && env.GUILD_ID) {
+  initGuildCommands(env.BOT_TOKEN as string, env.CLIENT_ID, env.GUILD_ID);
 }

@@ -1,12 +1,14 @@
 import Redis from 'ioredis';
 
+import env from '../env';
+
 type UserSettings = {
   from: string;
   to: string;
 };
 
 class SettingsStorage {
-  private redis = new Redis(process.env.REDIS_URL);
+  private redis = new Redis(env.REDIS_URL);
 
   private formatKey(guild: string, user: string) {
     return `settings.${guild}.${user}`;
