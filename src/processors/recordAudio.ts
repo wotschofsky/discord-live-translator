@@ -50,7 +50,7 @@ const recordAudio = async (receiver: VoiceReceiver, userId: string): Promise<str
 
     return fileName;
   } catch (err) {
-    writeToLog(`Failed recording ${userId} to ${fileName} - ${err.message}`);
+    writeToLog(`Failed recording ${userId} to ${fileName} - ${err}`);
   }
 };
 
