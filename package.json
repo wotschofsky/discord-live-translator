@@ -6,7 +6,7 @@
   "license": "GPL-3.0-only",
   "scripts": {
     "build": "tsc",
-    "start": "node -r source-map-support/register src/app.js",
+    "start": "node -r source-map-support/register dist/app.js",
     "dev": "nodemon",
     "format": "prettier src/** --write"
   },
