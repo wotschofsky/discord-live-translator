@@ -1,8 +1,8 @@
 import { EndBehaviorType, VoiceReceiver } from '@discordjs/voice';
 import { FileWriter } from 'wav';
-import { OpusEncoder } from '@discordjs/opus';
 import { pipeline } from 'stream/promises';
 import { Transform } from 'stream';
+import OpusScript from 'opusscript'; // Using opusscript instead of @discordjs/opus due to lack of support for macOS arm64
 import path from 'path';
 
 import writeToLog from '../utils/writeToLog';
@@ -24,7 +24,7 @@ class OpusDecodingStream extends Transform {
 }
 
 const recordAudio = async (receiver: VoiceReceiver, userId: string): Promise<string | undefined> => {
-  const encoder = new OpusEncoder(16000, 1);
+  const encoder = new OpusScript(16000, 1); // create an OpusScript instance instead of OpusEncoder
 
   const fileName = path.join(__dirname, '../../cache/rec', `${userId}_${Date.now()}.wav`);
 
