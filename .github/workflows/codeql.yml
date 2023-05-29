@@ -9,14 +9,16 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "CodeQL"
+name: CodeQL
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - main
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "master" ]
+    branches:
+      - main
   schedule:
     - cron: '27 12 * * 4'
 
@@ -34,7 +36,6 @@ jobs:
       matrix:
         language:
           - javascript
-          - typescript
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
