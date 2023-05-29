@@ -4,7 +4,11 @@ FROM node:16-slim
 RUN apt-get update; apt-get upgrade -y
 
 # Install system dependencies
-RUN apt-get install ffmpeg make gcc g++ wget -y
+RUN apt-get install ffmpeg make gcc g++ wget ca-certificates -y --no-install-recommends
+
+RUN groupadd -r bot && \
+    useradd -r -g bot bot
+USER bot
 
 # Set directory
 WORKDIR /app
@@ -12,7 +16,7 @@ WORKDIR /app
 # Install node modules
 COPY package.json .
 COPY yarn.lock .
-RUN yarn install --frozen-lockfile && \
+RUN yarn install --frozen-lockfile --ignore-scripts && \
     yarn cache clean
 
 # Build whisper.cpp in whisper-node and download model
