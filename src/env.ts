@@ -12,7 +12,7 @@ const env = createEnv({
     CLIENT_ID: z.string().optional(),
     GUILD_ID: z.string().optional(),
     LOG_PATH: z.string().optional(),
-    REDIS_URL: z.string()
+    REDIS_URL: z.string().optional(),
   },
   runtimeEnv: process.env
 });
