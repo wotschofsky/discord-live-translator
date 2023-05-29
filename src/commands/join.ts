@@ -8,7 +8,7 @@ import {
   joinVoiceChannel,
   VoiceConnectionStatus
 } from '@discordjs/voice';
-import { Permissions } from 'discord.js';
+import { PermissionsBitField } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 
 import { audioQueue } from '../utils/AudioQueue';
@@ -36,9 +36,9 @@ export const joinCommandHandler: CommandHandler = async (interaction) => {
   }
 
   if (
-    !interaction.guild.me
+    !interaction.guild.members.me
       ?.permissionsIn(interaction.member.voice.channel)
-      .has([Permissions.FLAGS.CONNECT, Permissions.FLAGS.SPEAK])
+      .has([PermissionsBitField.Flags.Connect, PermissionsBitField.Flags.Speak])
   ) {
     await interaction.reply({
       content: 'The bot is missing permission for your channel to connect and/or speak! :grimacing:',

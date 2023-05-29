@@ -1,4 +1,4 @@
-import Discord, { Intents, Permissions } from 'discord.js';
+import Discord, { ActivityType, GatewayIntentBits } from 'discord.js';
 
 import { initGuildCommands } from './interactions';
 import { joinCommandHandler } from './commands/join';
@@ -11,7 +11,7 @@ import env from './env';
 import writeToLog from './utils/writeToLog';
 
 const client = new Discord.Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES]
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]
 });
 
 client.on('interactionCreate', async (interaction) => {
@@ -42,7 +42,7 @@ client.on('interactionCreate', async (interaction) => {
 client.once('ready', () => {
   if (client.user) {
     writeToLog(`Logged in as ${client.user.tag}!`);
-    client.user.setActivity('your beautiful voice', { type: 'LISTENING' });
+    client.user.setActivity('your beautiful voice', { type: ActivityType.Listening });
   } else {
     writeToLog('Ready but no user available!');
   }
