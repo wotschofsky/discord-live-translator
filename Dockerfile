@@ -1,4 +1,4 @@
-FROM --platform=amd64 node:16-slim
+FROM node:16-slim
 
 # Update environment
 RUN apt-get update; apt-get upgrade -y
