@@ -1,4 +1,4 @@
-import fs from 'fs-extra';
+import fs from 'fs/promises';
 import path from 'path';
 
 import env from '../env';
@@ -10,7 +10,7 @@ const writeToLog = (...data: string[]) => {
 
   if (env.LOG_PATH) {
     const logPath = path.isAbsolute(env.LOG_PATH) ? env.LOG_PATH : path.join(process.cwd(), env.LOG_PATH);
-    fs.appendFile(logPath, message + '\n', (err) => {
+    fs.appendFile(logPath, message + '\n').catch((err) => {
       if (err) console.error(err);
     });
   }
