@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/app.ts",
   "author": "Felix Wotschofsky <hello@felisk.io>",
-  "license": "GPL-3.0-only",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "build": "tsc",
     "start": "node -r source-map-support/register dist/app.js",
