@@ -1,30 +1,29 @@
-import { Model } from 'stt';
-import fs from 'fs-extra';
-import path from 'path';
+import fs from 'fs/promises';
+// @ts-ignore
+import { whisper } from 'whisper-node';
 
-import getConfig from '../utils/getConfig';
 import writeToLog from '../utils/writeToLog';
 
-const config = getConfig();
-
-const ds: Record<string, Model> = {};
-
-for (const lang in config.languages) {
-  const langDetails = config.languages[lang];
-  writeToLog(`Initializing STT model for ${langDetails.displayName}...`);
-  ds[lang] = new Model(path.join(__dirname, '../../models', langDetails.sttModel));
-  ds[lang].enableExternalScorer(path.join(__dirname, '../../models', langDetails.sttScorer));
-}
-
-const recognizeRecording = async (fileName: string, lang: string) => {
+const recognizeRecording = async (fileName: string) => {
   writeToLog(`Analyzing "${fileName}"...`);
 
-  const data = await fs.readFile(fileName);
-  const result = ds[lang].stt(data);
+  // TODO Create custom bindings for whisper
+  const result: { speech: string }[] = await whisper(fileName, {
+    modelName: 'small',
+    whisperOptions: {
+      word_timestamps: false
+    }
+  });
 
-  fs.remove(fileName);
+  fs.unlink(fileName).catch((err) => {
+    console.error(`Failed to delete ${fileName} - ${err}`);
+  });
 
-  return result;
+  if (!result) {
+    throw new Error('Failed to recognize speech');
+  }
+
+  return result.map((line) => line.speech).join(' ');
 };
 
 export default recognizeRecording;

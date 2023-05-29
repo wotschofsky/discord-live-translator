@@ -94,7 +94,7 @@ export const joinCommandHandler: CommandHandler = async (interaction) => {
         const userSettings = await settingsStorage.get(interaction.guildId as string, userId);
         if (!userSettings) return;
 
-        const originalText = await recognizeRecording(fileName, userSettings.from);
+        const originalText = await recognizeRecording(fileName);
         if (!originalText) return;
 
         const translatedText = await translate(originalText, userSettings.from, userSettings.to);
