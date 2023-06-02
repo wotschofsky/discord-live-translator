@@ -21,7 +21,7 @@ RUN yarn install --frozen-lockfile --ignore-scripts && \
 
 # Build whisper.cpp in whisper-node and download model
 RUN (cd node_modules/whisper-node/lib/whisper.cpp/; make)
-RUN wget https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin -P node_modules/whisper-node/lib/whisper.cpp/models/
+RUN wget https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin --progress=bar:force:noscroll -P node_modules/whisper-node/lib/whisper.cpp/models/
 
 # Copy application files
 COPY . .
