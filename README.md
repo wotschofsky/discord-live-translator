@@ -27,15 +27,13 @@ If you for whatever reason don't want to use the *free hosted version* of this b
 
     `$ docker build -t discord-live-translator .`
 
-2. Download [models and scorers](https://coqui.ai/models) for [Coqui STT](https://github.com/coqui-ai/STT) for all languages you want to support and put them in a *models* directory.
+2. Set up an instance of [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate).
 
-3. Set up an instance of [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate).
+3. Start [containers for Mozilla TTS](https://github.com/synesthesiam/docker-mozillatts) for all languages you want to support
 
-4. Start [containers for Mozilla TTS](https://github.com/synesthesiam/docker-mozillatts) for all languages you want to support
+4. Start an instance of [Redis](https://redis.io/).
 
-5. Start an instance of [Redis](https://redis.io/).
-
-6. Start the discord-live-translator container while providing two volumes: One for the config file and one for the STT models. In addition provide the bot token from the [Discord Developer Portal](https://discord.com/developers/applications) as *BOT_TOKEN* as well as the URL for your Redis instance as *REDIS_URL* environment variables.
+5. Start the discord-live-translator container while providing two volumes: One for the config file and one for the STT models. In addition provide the bot token from the [Discord Developer Portal](https://discord.com/developers/applications) as *BOT_TOKEN* as well as the URL for your Redis instance as *REDIS_URL* environment variables.
 
     ```$ docker run -e BOT_TOKEN=xxxxx -v `pwd`/config.json:/app/config.json -v `pwd`/models:/app/models discord-live-translator```
 
@@ -48,8 +46,6 @@ If you for whatever reason don't want to use the *free hosted version* of this b
     "en": { // Unique language key
       "icon": ":flag_us:", // Fitting Icon/Emoji
       "displayName": "English", // Language display name
-      "sttModel": "en/deepspeech-0.9.3-models.pbmm", // DeepSpeech Model file relative to model directory
-      "sttScorer": "en/deepspeech-0.9.3-models.scorer", // DeepSpeech Scorer file relative to model directory
       "ttsHost": "http://tts:5002", // Address of Mozilla TTS Container
       "translatorCode": "en", // Language code for LibreTranslate
       "supports": "io" // Specify whether only input or output or both are supported
