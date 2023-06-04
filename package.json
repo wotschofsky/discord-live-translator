@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
-    "@tsconfig/node16": "^1.0.4",
+    "@tsconfig/node18": "^2.0.1",
     "@types/fs-extra": "^9.0.11",
     "@types/ioredis": "^4.28.1",
     "@types/node": "^15.12.5",

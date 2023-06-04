@@ -1,4 +1,4 @@
-FROM node:16-slim as build-python
+FROM node:18-slim as build-python
 
 # Update environment
 RUN apt-get update && apt-get upgrade -y
@@ -36,7 +36,7 @@ RUN wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[
     make -j "$(nproc)" && \
     make install
 
-FROM node:16-slim
+FROM node:18-slim
 
 # Update environment
 RUN apt-get update && apt-get upgrade -y
