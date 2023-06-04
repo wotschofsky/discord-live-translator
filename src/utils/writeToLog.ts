@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import env from '@/env';
+import env from '../env';
 
 const writeToLog = (...data: string[]) => {
   const date = new Date();

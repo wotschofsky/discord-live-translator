@@ -11,15 +11,15 @@ import { PermissionsBitField } from 'discord.js';
 import fs from 'fs-extra';
 import path from 'path';
 
-import languages from '@/languages';
-import readText from '@/processors/readText';
-import recognizeRecording from '@/processors/recognizeRecording';
-import recordAudio from '@/processors/recordAudio';
-import translate from '@/processors/translate';
-import type { CommandHandler } from '@/types';
-import { audioQueue } from '@/utils/AudioQueue';
-import { isGuildMember } from '@/utils/is';
-import settingsStorage from '@/utils/settingsStorage';
+import languages from '../languages';
+import readText from '../processors/readText';
+import recognizeRecording from '../processors/recognizeRecording';
+import recordAudio from '../processors/recordAudio';
+import translate from '../processors/translate';
+import type { CommandHandler } from '../types';
+import { audioQueue } from '../utils/AudioQueue';
+import { isGuildMember } from '../utils/is';
+import settingsStorage from '../utils/settingsStorage';
 
 export const joinCommand = new SlashCommandBuilder()
   .setName('join')

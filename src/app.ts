@@ -1,14 +1,14 @@
 import Discord, { ActivityType, GatewayIntentBits } from 'discord.js';
 
-import { joinCommandHandler } from '@/commands/join';
-import { languagesCommandHandler } from '@/commands/languages';
-import { leaveCommandHandler } from '@/commands/leave';
-import { startCommandHandler } from '@/commands/start';
-import { statusCommandHandler } from '@/commands/status';
-import { stopCommandHandler } from '@/commands/stop';
-import env from '@/env';
-import { initGuildCommands } from '@/interactions';
-import writeToLog from '@/utils/writeToLog';
+import { joinCommandHandler } from './commands/join';
+import { languagesCommandHandler } from './commands/languages';
+import { leaveCommandHandler } from './commands/leave';
+import { startCommandHandler } from './commands/start';
+import { statusCommandHandler } from './commands/status';
+import { stopCommandHandler } from './commands/stop';
+import env from './env';
+import { initGuildCommands } from './interactions';
+import writeToLog from './utils/writeToLog';
 
 const client = new Discord.Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]
