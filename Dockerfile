@@ -63,6 +63,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
+COPY python/preload_models.py python/
+RUN python3 python/preload_models.py
+
 # Install Node.js dependencies
 COPY package.json yarn.lock .
 RUN yarn install --frozen-lockfile --ignore-scripts && \
