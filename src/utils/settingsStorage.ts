@@ -1,10 +1,11 @@
 import Redis from 'ioredis';
 
 import env from '../env';
+import languages from '../languages';
 
 type UserSettings = {
-  from: string;
-  to: string;
+  from: keyof typeof languages;
+  to: keyof typeof languages;
 };
 
 class SettingsStorage {
@@ -20,7 +21,7 @@ class SettingsStorage {
     return data ? JSON.parse(data) : undefined;
   }
 
-  public async set(guild: string, user: string, from: string, to: string) {
+  public async set(guild: string, user: string, from: keyof typeof languages, to: keyof typeof languages) {
     const key = this.formatKey(guild, user);
     await this.redis.set(key, JSON.stringify({ from, to }));
   }

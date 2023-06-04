@@ -13,15 +13,13 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 
 import { audioQueue } from '../utils/AudioQueue';
 import { isGuildMember } from '../utils/is';
-import getConfig from '../utils/getConfig';
+import languages from '../languages';
 import readText from '../processors/readText';
 import recognizeRecording from '../processors/recognizeRecording';
 import recordAudio from '../processors/recordAudio';
 import settingsStorage from '../utils/settingsStorage';
 import translate from '../processors/translate';
 import type { CommandHandler } from '../types';
-
-const config = getConfig();
 
 export const joinCommand = new SlashCommandBuilder()
   .setName('join')
@@ -103,8 +101,8 @@ export const joinCommandHandler: CommandHandler = async (interaction) => {
 
         const translatedText = await translate(
           originalText,
-          config.languages[userSettings.from].translatorCode,
-          config.languages[userSettings.to].translatorCode
+          languages[userSettings.from].translatorCode,
+          languages[userSettings.to].translatorCode
         );
 
         await readText(connection, translatedText, userSettings.to);

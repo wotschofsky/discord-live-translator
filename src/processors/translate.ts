@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-import getConfig from '../utils/getConfig';
+import env from '../env';
 import writeToLog from '../utils/writeToLog';
 
-const config = getConfig();
 
 const translate = async (text: string, from: string, to: string): Promise<string> => {
   writeToLog(`Translating "${text}" from ${from} into ${to}...`);
@@ -13,7 +12,7 @@ const translate = async (text: string, from: string, to: string): Promise<string
   }
 
   const response = await axios({
-    url: `${config.translationHost}/translate`,
+    url: `${env.TRANSLATION_HOST}/translate`,
     method: 'POST',
     data: {
       q: text,

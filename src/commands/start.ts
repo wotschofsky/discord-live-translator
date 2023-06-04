@@ -1,27 +1,23 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { type APIApplicationCommandOptionChoice } from 'discord.js';
 
-import getConfig from '../utils/getConfig';
+import languages from '../languages';
 import settingsStorage from '../utils/settingsStorage';
 import type { CommandHandler } from '../types';
 
-const config = getConfig();
-
-const languageChoices: APIApplicationCommandOptionChoice<string>[] = Object.entries(config.languages).map(([key, value]) => ({
+const languageChoices: APIApplicationCommandOptionChoice<string>[] = Object.entries(languages).map(([key, value]) => ({
   name: value.displayName,
   value: key
 }));
-const inputLanguageChoices = languageChoices.filter(({ value }) => config.languages[value].supports.includes('i'));
-const outputLanguageChoices = languageChoices.filter(({ value }) => config.languages[value].supports.includes('o'));
 
 export const startCommand = new SlashCommandBuilder()
   .setName('start')
   .setDescription('Start the translation')
   .addStringOption((option) =>
-    option.setName('from').setDescription('From Language').addChoices(...inputLanguageChoices).setRequired(true)
+    option.setName('from').setDescription('From Language').addChoices(...languageChoices).setRequired(true)
   )
   .addStringOption((option) =>
-    option.setName('to').setDescription('To Language').addChoices(...outputLanguageChoices).setRequired(true)
+    option.setName('to').setDescription('To Language').addChoices(...languageChoices).setRequired(true)
   );
 
 export const startCommandHandler: CommandHandler = async (interaction) => {
@@ -32,35 +28,28 @@ export const startCommandHandler: CommandHandler = async (interaction) => {
     return;
   }
 
-  const fromLanguage = interaction.options.get('from')?.value?.toString();
-  const toLanguage = interaction.options.get('to')?.value?.toString();
+  const fromLanguageRaw = interaction.options.get('from')?.value?.toString();
+  const toLanguageRaw = interaction.options.get('to')?.value?.toString();
+
+  if (!fromLanguageRaw || !(fromLanguageRaw in languages)) {
+    await interaction.editReply(
+      `"${fromLanguageRaw}" is not a supported language! Use "/languages" for a list of supported ones. :x:`
+    );
+    return;
+  }
+  const fromLanguage = fromLanguageRaw as keyof typeof languages;
+
+
+  if (!toLanguageRaw || !(toLanguageRaw in languages)) {
+    await interaction.editReply(
+      `"${toLanguageRaw}" is not a supported language! Use "/languages" for a list of supported ones. :x:`
+    );
+    return;
+  }
+  const toLanguage = toLanguageRaw as keyof typeof languages;
 
   if (fromLanguage === toLanguage) {
     await interaction.editReply('Source and target language may not be the same! :x:');
-    return;
-  }
-
-  if (!fromLanguage || !(fromLanguage in config.languages)) {
-    await interaction.editReply(
-      `"${fromLanguage}" is not a supported language! Use "/languages" for a list of supported ones. :x:`
-    );
-    return;
-  }
-
-  if (!toLanguage || !(toLanguage in config.languages)) {
-    await interaction.editReply(
-      `"${toLanguage}" is not a supported language! Use "/languages" for a list of supported ones. :x:`
-    );
-    return;
-  }
-
-  if (!config.languages[fromLanguage].supports.includes('i')) {
-    await interaction.editReply(`"${fromLanguage}" is not supported as source language! :x:`);
-    return;
-  }
-
-  if (!config.languages[toLanguage].supports.includes('o')) {
-    await interaction.editReply(`"${toLanguage}" is not supported as destination language! :x:`);
     return;
   }
 

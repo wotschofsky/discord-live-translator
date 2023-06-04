@@ -4,18 +4,16 @@ import path from 'path';
 import type { VoiceConnection } from '@discordjs/voice';
 
 import { audioQueue } from '../utils/AudioQueue';
-import getConfig from '../utils/getConfig';
+import languages from '../languages';
 import writeToLog from '../utils/writeToLog';
 
 const execPromise = promisify(exec);
 
-const config = getConfig();
-
-const readText = async (connection: VoiceConnection, message: string, lang: string) => {
+const readText = async (connection: VoiceConnection, message: string, lang: keyof typeof languages) => {
   writeToLog(`Adding "${message}" to audio queue...`);
 
   const pythonScript = path.join(__dirname, '../../python/readText.py');
-  const modelName = config.languages[lang].ttsModel;
+  const modelName = languages[lang].ttsModel;
   const escapedMessage = message.replaceAll('"', '');
   const fileName = path.join(__dirname, `../../cache/tts/${Math.round(Math.random() * 1000000)}.wav`);
 

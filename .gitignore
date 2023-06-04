@@ -134,5 +134,4 @@ dist
 
 # App specific
 cache/
-config.json
 models/
