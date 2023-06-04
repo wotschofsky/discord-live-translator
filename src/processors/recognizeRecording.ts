@@ -20,7 +20,7 @@ const recognizeRecording = async (fileName: string) => {
   });
 
   if (!result) {
-    throw new Error('Failed to recognize speech');
+    return '';
   }
 
   return result.map((line) => line.speech).join(' ');

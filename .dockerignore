@@ -1,6 +1,8 @@
 .**
+.venv/
 cache/
 config.json
+dist/
 Dockerfile
 icons/
 models/

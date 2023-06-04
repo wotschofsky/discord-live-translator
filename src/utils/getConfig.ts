@@ -7,7 +7,7 @@ type Config = {
     [lang: string]: {
       icon: string;
       displayName: string;
-      ttsHost: string;
+      ttsModel: string;
       translatorCode: string;
       supports: 'i' | 'o' | 'io' | 'oi';
     };

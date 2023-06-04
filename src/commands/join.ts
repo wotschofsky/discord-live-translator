@@ -52,6 +52,7 @@ export const joinCommandHandler: CommandHandler = async (interaction) => {
 
   await interaction.deferReply();
   await fs.ensureDir(path.join(__dirname, '../../cache/rec'));
+  await fs.ensureDir(path.join(__dirname, '../../cache/tts'));
 
   try {
     const channel = interaction.member.voice.channel;
