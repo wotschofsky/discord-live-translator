@@ -12,7 +12,7 @@ const execPromise = promisify(exec);
 const readText = async (connection: VoiceConnection, message: string, lang: keyof typeof languages) => {
   writeToLog(`Adding "${message}" to audio queue...`);
 
-  const pythonScript = path.join(__dirname, '../../python/readText.py');
+  const pythonScript = path.join(__dirname, '../../python/read_text.py');
   const modelName = languages[lang].ttsModel;
   const escapedMessage = message.replaceAll('"', '');
   const fileName = path.join(__dirname, `../../cache/tts/${Math.round(Math.random() * 1000000)}.wav`);
