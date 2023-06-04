@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 
 import languages from '../languages';
-import settingsStorage from '../utils/settingsStorage';
 import type { CommandHandler } from '../types';
+import settingsStorage from '../utils/settingsStorage';
 
 export const statusCommand = new SlashCommandBuilder().setName('status').setDescription('Show your current settings');
 

@@ -1,5 +1,4 @@
-import fs from 'fs-extra';
-import path from 'path';
+import { SlashCommandBuilder } from '@discordjs/builders';
 import {
   AudioPlayerStatus,
   createAudioResource,
@@ -9,17 +8,18 @@ import {
   VoiceConnectionStatus
 } from '@discordjs/voice';
 import { PermissionsBitField } from 'discord.js';
-import { SlashCommandBuilder } from '@discordjs/builders';
+import fs from 'fs-extra';
+import path from 'path';
 
-import { audioQueue } from '../utils/AudioQueue';
-import { isGuildMember } from '../utils/is';
 import languages from '../languages';
 import readText from '../processors/readText';
 import recognizeRecording from '../processors/recognizeRecording';
 import recordAudio from '../processors/recordAudio';
-import settingsStorage from '../utils/settingsStorage';
 import translate from '../processors/translate';
 import type { CommandHandler } from '../types';
+import { audioQueue } from '../utils/AudioQueue';
+import { isGuildMember } from '../utils/is';
+import settingsStorage from '../utils/settingsStorage';
 
 export const joinCommand = new SlashCommandBuilder()
   .setName('join')

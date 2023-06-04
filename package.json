@@ -27,12 +27,13 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@types/fs-extra": "^9.0.11",
     "@types/ioredis": "^4.28.1",
     "@types/node": "^15.12.5",
     "@types/wav": "^1.0.1",
     "nodemon": "^2.0.20",
-    "prettier": "^2.3.2",
+    "prettier": "^2.8.8",
     "typescript": "^5.0.4"
   }
 }

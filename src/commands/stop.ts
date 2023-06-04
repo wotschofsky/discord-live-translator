@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 
-import settingsStorage from '../utils/settingsStorage';
 import type { CommandHandler } from '../types';
+import settingsStorage from '../utils/settingsStorage';
 
 export const stopCommand = new SlashCommandBuilder().setName('stop').setDescription('Stop the translation');
 

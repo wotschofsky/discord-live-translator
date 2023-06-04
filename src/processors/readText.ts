@@ -1,10 +1,10 @@
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import path from 'path';
 import type { VoiceConnection } from '@discordjs/voice';
+import { exec } from 'child_process';
+import path from 'path';
+import { promisify } from 'util';
 
-import { audioQueue } from '../utils/AudioQueue';
 import languages from '../languages';
+import { audioQueue } from '../utils/AudioQueue';
 import writeToLog from '../utils/writeToLog';
 
 const execPromise = promisify(exec);

@@ -2,8 +2,8 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { type APIApplicationCommandOptionChoice } from 'discord.js';
 
 import languages from '../languages';
-import settingsStorage from '../utils/settingsStorage';
 import type { CommandHandler } from '../types';
+import settingsStorage from '../utils/settingsStorage';
 
 const languageChoices: APIApplicationCommandOptionChoice<string>[] = Object.entries(languages).map(([key, value]) => ({
   name: value.displayName,
@@ -14,10 +14,18 @@ export const startCommand = new SlashCommandBuilder()
   .setName('start')
   .setDescription('Start the translation')
   .addStringOption((option) =>
-    option.setName('from').setDescription('From Language').addChoices(...languageChoices).setRequired(true)
+    option
+      .setName('from')
+      .setDescription('From Language')
+      .addChoices(...languageChoices)
+      .setRequired(true)
   )
   .addStringOption((option) =>
-    option.setName('to').setDescription('To Language').addChoices(...languageChoices).setRequired(true)
+    option
+      .setName('to')
+      .setDescription('To Language')
+      .addChoices(...languageChoices)
+      .setRequired(true)
   );
 
 export const startCommandHandler: CommandHandler = async (interaction) => {
@@ -38,7 +46,6 @@ export const startCommandHandler: CommandHandler = async (interaction) => {
     return;
   }
   const fromLanguage = fromLanguageRaw as keyof typeof languages;
-
 
   if (!toLanguageRaw || !(toLanguageRaw in languages)) {
     await interaction.editReply(

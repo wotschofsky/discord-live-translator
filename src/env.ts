@@ -1,6 +1,6 @@
 import { createEnv } from '@t3-oss/env-core';
-import { z } from 'zod';
 import dotenv from 'dotenv';
+import { z } from 'zod';
 
 dotenv.config();
 
@@ -13,7 +13,7 @@ const env = createEnv({
     GUILD_ID: z.string().optional(),
     LOG_PATH: z.string().optional(),
     REDIS_URL: z.string().optional(),
-    TRANSLATION_HOST: z.string(),
+    TRANSLATION_HOST: z.string()
   },
   runtimeEnv: process.env
 });
