@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import env from '../env';
-import writeToLog from '../utils/writeToLog';
+import env from '@/env';
+import writeToLog from '@/utils/writeToLog';
 
 const translate = async (text: string, from: string, to: string): Promise<string> => {
   writeToLog(`Translating "${text}" from ${from} into ${to}...`);

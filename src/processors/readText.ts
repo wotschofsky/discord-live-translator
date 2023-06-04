@@ -3,9 +3,9 @@ import { exec } from 'child_process';
 import path from 'path';
 import { promisify } from 'util';
 
-import languages from '../languages';
-import { audioQueue } from '../utils/AudioQueue';
-import writeToLog from '../utils/writeToLog';
+import languages from '@/languages';
+import { audioQueue } from '@/utils/AudioQueue';
+import writeToLog from '@/utils/writeToLog';
 
 const execPromise = promisify(exec);
 

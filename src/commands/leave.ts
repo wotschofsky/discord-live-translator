@@ -2,9 +2,9 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { AudioPlayerStatus, createAudioResource, getVoiceConnection } from '@discordjs/voice';
 import path from 'path';
 
-import type { CommandHandler } from '../types';
-import { audioQueue } from '../utils/AudioQueue';
-import { isGuildMember } from '../utils/is';
+import type { CommandHandler } from '@/types';
+import { audioQueue } from '@/utils/AudioQueue';
+import { isGuildMember } from '@/utils/is';
 
 export const leaveCommand = new SlashCommandBuilder()
   .setName('leave')

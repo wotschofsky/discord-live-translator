@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 
-import languages from '../languages';
-import type { CommandHandler } from '../types';
+import languages from '@/languages';
+import type { CommandHandler } from '@/types';
 
 export const languagesCommand = new SlashCommandBuilder()
   .setName('languages')

@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { type APIApplicationCommandOptionChoice } from 'discord.js';
 
-import languages from '../languages';
-import type { CommandHandler } from '../types';
-import settingsStorage from '../utils/settingsStorage';
+import languages from '@/languages';
+import type { CommandHandler } from '@/types';
+import settingsStorage from '@/utils/settingsStorage';
 
 const languageChoices: APIApplicationCommandOptionChoice<string>[] = Object.entries(languages).map(([key, value]) => ({
   name: value.displayName,

@@ -1,6 +1,6 @@
 import { AudioPlayer, AudioPlayerStatus, createAudioResource, VoiceConnection } from '@discordjs/voice';
 
-import PlayerPool from './PlayerPool';
+import PlayerPool from '@/utils/PlayerPool';
 
 class AudioQueue {
   public readonly players = new PlayerPool();

@@ -1,7 +1,7 @@
 import Redis from 'ioredis';
 
-import env from '../env';
-import languages from '../languages';
+import env from '@/env';
+import languages from '@/languages';
 
 type UserSettings = {
   from: keyof typeof languages;

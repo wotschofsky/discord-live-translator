@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 // @ts-ignore
 import { whisper } from 'whisper-node';
 
-import writeToLog from '../utils/writeToLog';
+import writeToLog from '@/utils/writeToLog';
 
 const recognizeRecording = async (fileName: string) => {
   writeToLog(`Analyzing "${fileName}"...`);

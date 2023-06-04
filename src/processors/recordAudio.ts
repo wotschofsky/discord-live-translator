@@ -6,7 +6,7 @@ import { Transform } from 'stream';
 import { pipeline } from 'stream/promises';
 import { FileWriter } from 'wav';
 
-import writeToLog from '../utils/writeToLog';
+import writeToLog from '@/utils/writeToLog';
 
 // Based on https://github.com/Yvtq8K3n/BobbyMcLovin/blob/3a007a675d36f61c89e1151293250f6cb0a441b9/index.js
 

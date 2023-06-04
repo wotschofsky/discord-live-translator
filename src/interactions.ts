@@ -1,12 +1,12 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 
-import { joinCommand } from './commands/join';
-import { languagesCommand } from './commands/languages';
-import { leaveCommand } from './commands/leave';
-import { startCommand } from './commands/start';
-import { statusCommand } from './commands/status';
-import { stopCommand } from './commands/stop';
+import { joinCommand } from '@/commands/join';
+import { languagesCommand } from '@/commands/languages';
+import { leaveCommand } from '@/commands/leave';
+import { startCommand } from '@/commands/start';
+import { statusCommand } from '@/commands/status';
+import { stopCommand } from '@/commands/stop';
 
 const commands = [
   joinCommand.toJSON(),
