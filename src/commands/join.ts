@@ -99,13 +99,12 @@ export const joinCommandHandler: CommandHandler = async (interaction) => {
         const originalText = await recognizeRecording(fileName);
         if (!originalText) return;
 
-        const translatedText = await translate(
-          originalText,
-          languages[userSettings.from].translatorCode,
-          languages[userSettings.to].translatorCode
-        );
+        const translatedText =
+          userSettings.target === 'en'
+            ? originalText
+            : await translate(originalText, languages[userSettings.target].translatorCode);
 
-        await readText(connection, translatedText, userSettings.to);
+        await readText(connection, translatedText, userSettings.target);
       });
     });
   } catch (err) {

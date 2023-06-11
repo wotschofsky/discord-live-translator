@@ -19,11 +19,10 @@ export const statusCommandHandler: CommandHandler = async (interaction) => {
   if (!prefs) {
     await interaction.editReply('You currently have not activated live translation! :sleeping:');
   } else {
-    const fromLanguage = languages[prefs.from];
-    const toLanguage = languages[prefs.to];
+    const targetLanguage = languages[prefs.target];
 
     await interaction.editReply(
-      `You are currently translating from ${fromLanguage.icon} ${fromLanguage.displayName} to ${toLanguage.icon} ${toLanguage.displayName}! :thumbsup:`
+      `You are currently translating into ${targetLanguage.icon} ${targetLanguage.displayName}! :thumbsup:`
     );
   }
 };

@@ -4,8 +4,7 @@ import env from '../env';
 import languages from '../languages';
 
 type UserSettings = {
-  from: keyof typeof languages;
-  to: keyof typeof languages;
+  target: keyof typeof languages;
 };
 
 class SettingsStorage {
@@ -21,9 +20,9 @@ class SettingsStorage {
     return data ? JSON.parse(data) : undefined;
   }
 
-  public async set(guild: string, user: string, from: keyof typeof languages, to: keyof typeof languages) {
+  public async set(guild: string, user: string, target: keyof typeof languages) {
     const key = this.formatKey(guild, user);
-    await this.redis.set(key, JSON.stringify({ from, to }));
+    await this.redis.set(key, JSON.stringify({ target }));
   }
 
   public async delete(guild: string, user: string) {

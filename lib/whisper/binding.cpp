@@ -69,6 +69,7 @@ Napi::String whisperFull(const Napi::CallbackInfo &napiInfo)
 
   // Set up decoding parameters
   struct whisper_full_params params = whisper_full_default_params(WHISPER_SAMPLING_GREEDY);
+  params.translate = true;
   params.print_progress = false;
   params.print_timestamps = false;
 

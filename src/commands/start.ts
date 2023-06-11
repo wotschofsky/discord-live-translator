@@ -15,15 +15,8 @@ export const startCommand = new SlashCommandBuilder()
   .setDescription('Start the translation')
   .addStringOption((option) =>
     option
-      .setName('from')
-      .setDescription('From Language')
-      .addChoices(...languageChoices)
-      .setRequired(true)
-  )
-  .addStringOption((option) =>
-    option
-      .setName('to')
-      .setDescription('To Language')
+      .setName('target')
+      .setDescription('Target Language')
       .addChoices(...languageChoices)
       .setRequired(true)
   );
@@ -36,31 +29,17 @@ export const startCommandHandler: CommandHandler = async (interaction) => {
     return;
   }
 
-  const fromLanguageRaw = interaction.options.get('from')?.value?.toString();
-  const toLanguageRaw = interaction.options.get('to')?.value?.toString();
+  const targetLanguageRaw = interaction.options.get('target')?.value?.toString();
 
-  if (!fromLanguageRaw || !(fromLanguageRaw in languages)) {
+  if (!targetLanguageRaw || !(targetLanguageRaw in languages)) {
     await interaction.editReply(
-      `"${fromLanguageRaw}" is not a supported language! Use "/languages" for a list of supported ones. :x:`
+      `"${targetLanguageRaw}" is not a supported language! Use "/languages" for a list of supported ones. :x:`
     );
     return;
   }
-  const fromLanguage = fromLanguageRaw as keyof typeof languages;
+  const targetLanguage = targetLanguageRaw as keyof typeof languages;
 
-  if (!toLanguageRaw || !(toLanguageRaw in languages)) {
-    await interaction.editReply(
-      `"${toLanguageRaw}" is not a supported language! Use "/languages" for a list of supported ones. :x:`
-    );
-    return;
-  }
-  const toLanguage = toLanguageRaw as keyof typeof languages;
-
-  if (fromLanguage === toLanguage) {
-    await interaction.editReply('Source and target language may not be the same! :x:');
-    return;
-  }
-
-  await settingsStorage.set(interaction.guild.id, interaction.user.id, fromLanguage, toLanguage);
+  await settingsStorage.set(interaction.guild.id, interaction.user.id, targetLanguage);
 
   await interaction.editReply('Live translation activated! :thumbsup:');
 };

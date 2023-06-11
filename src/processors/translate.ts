@@ -1,8 +1,9 @@
 import env from '../env';
+import type languages from '../languages';
 import writeToLog from '../utils/writeToLog';
 
-const translate = async (text: string, from: string, to: string): Promise<string> => {
-  writeToLog(`Translating "${text}" from ${from} into ${to}...`);
+const translate = async (text: string, target: Exclude<keyof typeof languages, 'en'>): Promise<string> => {
+  writeToLog(`Translating "${text}" into ${target}...`);
 
   if (!text) {
     return '';
@@ -15,14 +16,13 @@ const translate = async (text: string, from: string, to: string): Promise<string
     },
     body: JSON.stringify({
       q: text,
-      source: from,
-      target: to
+      source: 'en',
+      target: target
     })
   });
 
   if (!(response.status >= 200 && response.status < 300)) {
     console.error(`Translation failed with status ${response.status}`);
-    console.log(await response.text())
     return '';
   }
 
