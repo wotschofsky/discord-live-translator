@@ -133,5 +133,6 @@ dist
 .pnp.*
 
 # App specific
+build/
 cache/
 models/

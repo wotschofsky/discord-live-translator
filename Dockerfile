@@ -48,6 +48,9 @@ RUN apt-get install -y --no-install-recommends \
     ffmpeg \
     g++ \
     gcc \
+    # libsndfile required for Whisper bindings
+    libsndfile1 \
+    libsndfile1-dev \
     # libsqlite3-dev required for Python
     libsqlite3-dev \
     make \
@@ -71,9 +74,9 @@ COPY package.json yarn.lock .
 RUN yarn install --frozen-lockfile --ignore-scripts && \
     yarn cache clean
 
-# Build whisper.cpp in whisper-node and download model
-RUN (cd node_modules/whisper-node/lib/whisper.cpp/; make)
-RUN wget https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin --progress=bar:force:noscroll -P node_modules/whisper-node/lib/whisper.cpp/models/
+# Download whisper.cpp model
+RUN mkdir models/ && \
+    wget https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin --progress=bar:force:noscroll -P models/
 
 # Copy application files
 COPY . .

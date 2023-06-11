@@ -5,7 +5,7 @@
   "author": "Felix Wotschofsky <hello@felisk.io>",
   "license": "AGPL-3.0-only",
   "scripts": {
-    "build": "tsc",
+    "build": "node-gyp rebuild && tsc",
     "start": "node -r source-map-support/register dist/app.js",
     "dev": "nodemon",
     "format": "prettier src/** --write"
@@ -23,7 +23,6 @@
     "source-map-support": "^0.5.21",
     "ts-node": "^10.0.0",
     "wav": "^1.0.2",
-    "whisper-node": "^0.2.12",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -33,6 +32,8 @@
     "@types/ioredis": "^4.28.1",
     "@types/node": "^15.12.5",
     "@types/wav": "^1.0.1",
+    "node-addon-api": "^6.1.0",
+    "node-gyp": "^9.3.1",
     "nodemon": "^2.0.20",
     "prettier": "^2.8.8",
     "typescript": "^5.0.4"

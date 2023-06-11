@@ -1,29 +1,21 @@
 import fs from 'fs/promises';
-// @ts-ignore
-import { whisper } from 'whisper-node';
+import path from 'path';
 
+import { whisperFull } from '../../lib/whisper';
 import writeToLog from '../utils/writeToLog';
+
+const modelPath = path.join(__dirname, '../../models/ggml-small.bin');
 
 const recognizeRecording = async (fileName: string) => {
   writeToLog(`Analyzing "${fileName}"...`);
 
-  // TODO Create custom bindings for whisper
-  const result: { speech: string }[] = await whisper(fileName, {
-    modelName: 'small',
-    whisperOptions: {
-      word_timestamps: false
-    }
-  });
+  const result = whisperFull(fileName, modelPath);
 
   fs.unlink(fileName).catch((err) => {
     console.error(`Failed to delete ${fileName} - ${err}`);
   });
 
-  if (!result) {
-    return '';
-  }
-
-  return result.map((line) => line.speech).join(' ');
+  return result;
 };
 
 export default recognizeRecording;
