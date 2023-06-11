@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { whisperFull } from '../../lib/whisper';
+import { whisperFull } from '../lib/whisper';
 import writeToLog from '../utils/writeToLog';
 
 const modelPath = path.join(__dirname, '../../models/ggml-small.bin');

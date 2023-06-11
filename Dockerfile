@@ -66,8 +66,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-COPY python/preload_models.py python/
-RUN python3 python/preload_models.py
+COPY src/lib/tts/preload_models.py src/lib/tts/
+RUN python3 src/lib/tts/preload_models.py
 
 # Install Node.js dependencies
 COPY package.json yarn.lock .

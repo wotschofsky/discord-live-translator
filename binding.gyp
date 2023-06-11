@@ -3,13 +3,13 @@
     {
       "target_name": "whisper",
       "sources": [
-        "./lib/whisper/binding.cpp",
-        "./lib/whisper/whisper.cpp/ggml.c",
-        "./lib/whisper/whisper.cpp/whisper.cpp"
+        "./src/lib/whisper/binding.cpp",
+        "./src/lib/whisper/whisper.cpp/ggml.c",
+        "./src/lib/whisper/whisper.cpp/whisper.cpp"
       ],
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")",
-        "./lib/whisper/whisper.cpp"
+        "./src/lib/whisper/whisper.cpp"
       ],
       "conditions": [
         ['OS=="mac"', {
