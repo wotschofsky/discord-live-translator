@@ -9,7 +9,7 @@ type UserSettings = {
 };
 
 class SettingsStorage {
-  private redis = new Redis(env.REDIS_URL);
+  private redis = env.REDIS_URL ? new Redis(env.REDIS_URL) : new Redis();
 
   private formatKey(guild: string, user: string) {
     return `settings.${guild}.${user}`;
