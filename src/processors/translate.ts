@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import env from '../env';
 import writeToLog from '../utils/writeToLog';
 
@@ -10,23 +8,27 @@ const translate = async (text: string, from: string, to: string): Promise<string
     return '';
   }
 
-  const response = await axios({
-    url: `${env.TRANSLATION_HOST}/translate`,
+  const response = await fetch(`${env.TRANSLATION_HOST}/translate`, {
     method: 'POST',
-    data: {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
       q: text,
       source: from,
       target: to
-    },
-    validateStatus: () => true
+    })
   });
 
   if (!(response.status >= 200 && response.status < 300)) {
     console.error(`Translation failed with status ${response.status}`);
+    console.log(await response.text())
     return '';
   }
 
-  return response.data.translatedText;
+  const data = await response.json();
+
+  return data.translatedText;
 };
 
 export default translate;
