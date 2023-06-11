@@ -1,4 +1,4 @@
-FROM node:18-slim as build-python
+FROM node:18-slim AS build-python
 
 # Update environment
 RUN apt-get update && apt-get upgrade -y
