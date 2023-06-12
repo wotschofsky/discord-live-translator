@@ -114,7 +114,7 @@ torchvision==0.15.2
 tqdm==4.65.0
 trainer==0.0.20
 trampoline==0.1.2
-transformers==4.29.2
+transformers==4.30.0
 TTS==0.14.0
 typing_extensions==4.6.3
 tzdata==2023.3
