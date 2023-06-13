@@ -1,9 +1,9 @@
 import { EndBehaviorType, VoiceReceiver } from '@discordjs/voice';
+import path from 'node:path';
+import { Transform } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
 // Using opusscript instead of @discordjs/opus due to lack of support for macOS arm64
 import OpusScript from 'opusscript';
-import path from 'path';
-import { Transform } from 'stream';
-import { pipeline } from 'stream/promises';
 import { FileWriter } from 'wav';
 
 import writeToLog from '../utils/writeToLog';

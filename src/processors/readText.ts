@@ -1,7 +1,7 @@
 import type { VoiceConnection } from '@discordjs/voice';
 import { exec } from 'child_process';
-import path from 'path';
-import { promisify } from 'util';
+import path from 'node:path';
+import { promisify } from 'node:util';
 
 import languages from '../languages';
 import { audioQueue } from '../utils/AudioQueue';

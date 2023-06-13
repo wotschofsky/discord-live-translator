@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { AudioPlayerStatus, createAudioResource, getVoiceConnection } from '@discordjs/voice';
-import path from 'path';
+import path from 'node:path';
 
 import type { CommandHandler } from '../types';
 import { audioQueue } from '../utils/AudioQueue';
