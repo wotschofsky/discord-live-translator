@@ -5,7 +5,7 @@
   "author": "Felix Wotschofsky <hello@felisk.io>",
   "license": "AGPL-3.0-only",
   "scripts": {
-    "build": "node-gyp rebuild && tsc",
+    "build": "sh build.sh",
     "start": "node -r source-map-support/register dist/app.js",
     "dev": "nodemon",
     "format": "prettier src/** --write"
