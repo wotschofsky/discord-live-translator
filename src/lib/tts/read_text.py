@@ -13,7 +13,6 @@ args = parser.parse_args()
 
 tts = TTS()
 
-tts.download_model_by_name(model_name=args.model)
 tts.load_tts_model_by_name(args.model, gpu=False)
 
 tts.tts_to_file(args.text, file_path=args.output)
