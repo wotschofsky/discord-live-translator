@@ -16,6 +16,14 @@ type WorkerToMainMessage =
       type: 'error';
     };
 
+const queue: {
+  audioPath: string;
+  modelPath: string;
+  onSuccess: (result: string) => void;
+  onError: (err: Error) => void;
+}[] = [];
+let workerActive = false;
+
 export const whisperFull = (audioPath: string, modelPath: string): Promise<string> =>
   new Promise((resolve, reject) => {
     if (!isMainThread) {
@@ -23,24 +31,52 @@ export const whisperFull = (audioPath: string, modelPath: string): Promise<strin
       return;
     }
 
-    const worker = new Worker(path.resolve(__dirname, './worker.js'));
-
-    worker.on('message', (message: WorkerToMainMessage) => {
-      switch (message.type) {
-        case 'success': {
-          resolve(message.result);
-          break;
-        }
-        case 'error': {
-          reject(new Error('Failed to recognize recording'));
-          break;
-        }
-      }
+    queue.push({
+      audioPath,
+      modelPath,
+      onSuccess: resolve,
+      onError: reject
     });
 
-    worker.postMessage({
-      type: 'start',
-      audioPath,
-      modelPath
-    } as MainToWorkerMessage);
+    if (!workerActive) {
+      processQueue();
+    }
   });
+
+const processQueue = () => {
+  if (workerActive) {
+    return;
+  }
+
+  const task = queue.shift();
+  if (!task) {
+    return;
+  }
+
+  workerActive = true;
+  const worker = new Worker(path.resolve(__dirname, './worker.js'));
+
+  worker.on('message', (message: WorkerToMainMessage) => {
+    switch (message.type) {
+      case 'success': {
+        task.onSuccess(message.result);
+        break;
+      }
+      case 'error': {
+        task.onError(new Error('Failed to recognize recording'));
+        break;
+      }
+    }
+  });
+
+  worker.on('exit', () => {
+    workerActive = false;
+    processQueue();
+  });
+
+  worker.postMessage({
+    type: 'start',
+    audioPath: task.audioPath,
+    modelPath: task.modelPath
+  } as MainToWorkerMessage);
+};
