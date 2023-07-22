@@ -1,6 +1,0 @@
-{
-  "search.exclude": {
-    "lib/whisper/whisper.cpp/**": true
-  },
-  "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 2 }"
-}

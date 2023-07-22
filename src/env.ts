@@ -13,6 +13,7 @@ const env = createEnv({
     GUILD_ID: z.string().optional(),
     LOG_PATH: z.string().optional(),
     REDIS_URL: z.string().optional(),
+    STT_HOST: z.string(),
     TRANSLATION_HOST: z.string()
   },
   runtimeEnv: process.env

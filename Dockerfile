@@ -9,14 +9,8 @@ RUN apt-get install -y --no-install-recommends \
     espeak-ng \
     ffmpeg \
     g++ \
-    gcc \
-    # libsndfile required for Whisper bindings
-    libsndfile1 \
-    libsndfile1-dev \
     # libsqlite3-dev required for Python
-    libsqlite3-dev \
-    make \
-    wget
+    libsqlite3-dev
 
 # Add Python
 COPY --from=python:3.10-slim /usr/local /usr/local
@@ -35,10 +29,6 @@ RUN python3 src/lib/tts/preload_models.py
 COPY package.json yarn.lock .
 RUN yarn install --frozen-lockfile --ignore-scripts && \
     yarn cache clean
-
-# Download whisper.cpp model
-RUN mkdir models/ && \
-    wget https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin --progress=bar:force:noscroll -P models/
 
 # Copy application files
 COPY . .

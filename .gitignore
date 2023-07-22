@@ -136,3 +136,6 @@ dist
 build/
 cache/
 models/
+
+# Rust / Cargo
+target/
