@@ -1,41 +1,3 @@
-FROM node:18-slim AS build-python
-
-# Update environment
-RUN apt-get update && apt-get upgrade -y
-
-# Install system dependencies
-RUN apt-get install -y --no-install-recommends \
-    ca-certificates \
-    dpkg-dev \
-    gcc \
-    libbluetooth-dev \
-    libbz2-dev \
-    libc6-dev \
-    libexpat1-dev \
-    libffi-dev \
-    libgdbm-dev \
-    liblzma-dev \
-    libncursesw5-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    libssl-dev \
-    make \
-    tk-dev \
-    uuid-dev \
-    wget \
-    xz-utils \
-    zlib1g-dev
-
-# Download and compile Python
-ENV PYTHON_VERSION 3.10.0
-RUN wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" && \
-    mkdir -p /usr/src/python && \
-    tar -xJC /usr/src/python --strip-components=1 -f python.tar.xz && \
-    rm python.tar.xz && cd /usr/src/python && \
-    ./configure --enable-optimizations && \
-    make -j "$(nproc)" && \
-    make install
-
 FROM node:18-slim
 
 # Update environment
@@ -56,8 +18,8 @@ RUN apt-get install -y --no-install-recommends \
     make \
     wget
 
-# Copy Python from build stage
-COPY --from=build-python /usr/local /usr/local
+# Add Python
+COPY --from=python:3.10-slim /usr/local /usr/local
 
 # Set directory
 WORKDIR /app
