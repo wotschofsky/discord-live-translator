@@ -3,12 +3,12 @@ name = "stt"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-async-trait = "0.1.72"
-hound = "3.5.0"
+actix-web = "4"
 num_cpus = "1.16.0"
-rocket = "0.4.11"
-rocket-multipart-form-data = "0.10.5"
+hound = "3.5.0"
 whisper-rs = "0.8.0"
+futures = "0.3.28"
+lazy_static = "1.4.0"
+simple_logger = "4.2.0"
+log = "0.4.19"

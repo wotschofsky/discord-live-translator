@@ -1,32 +1,31 @@
-#![feature(proc_macro_hygiene, decl_macro)]
-
+use actix_web::{web, App, HttpServer, Result};
+use futures::StreamExt;
+use num_cpus;
 use std::cmp;
 use std::env;
-use std::fs;
-use std::path::Path;
-use std::sync::atomic::{AtomicUsize, Ordering};
-
-use rocket::Data;
-use rocket::State;
-
+use std::io::Cursor;
 use whisper_rs::{FullParams, SamplingStrategy, WhisperContext};
 
 #[macro_use]
-extern crate rocket;
+extern crate lazy_static;
 
-struct Context {
-    whisper: WhisperContext,
-    request_id: AtomicUsize,
+lazy_static! {
+    static ref WHISPER: WhisperContext = WhisperContext::new(
+        env::var("MODEL_PATH")
+            .expect("MODEL_PATH is not set in env")
+            .as_str()
+    )
+    .expect("failed to load model");
 }
 
-#[post("/", data = "<body>")]
-fn upload(body: Data, ctx: State<Context>) -> Result<String, Box<dyn std::error::Error>> {
-    let current_count = ctx.request_id.fetch_add(1, Ordering::SeqCst);
-    let filename = format!("upload/{id}.wav", id = current_count);
-    fs::create_dir_all("upload/").expect("Failed to create \"upload/\" directory");
-    body.stream_to_file(Path::new(&filename))?;
+async fn upload(mut payload: web::Payload) -> Result<String> {
+    let mut body = web::BytesMut::new();
+    while let Some(chunk) = payload.next().await {
+        body.extend_from_slice(&chunk.unwrap());
+    }
+    let content = body.freeze();
 
-    let mut reader = hound::WavReader::open(&filename)?;
+    let mut reader = hound::WavReader::new(Cursor::new(content)).unwrap();
     let audio_data: Vec<f32> = reader
         .samples::<i16>()
         .filter_map(Result::ok)
@@ -42,7 +41,7 @@ fn upload(body: Data, ctx: State<Context>) -> Result<String, Box<dyn std::error:
     params.set_print_realtime(false);
     params.set_print_timestamps(false);
 
-    let mut state = ctx.whisper.create_state().expect("failed to create state");
+    let mut state = WHISPER.create_state().expect("failed to create state");
     state
         .full(params, &audio_data[..])
         .expect("failed to run model");
@@ -58,20 +57,22 @@ fn upload(body: Data, ctx: State<Context>) -> Result<String, Box<dyn std::error:
         result = result + &segment;
     }
 
-    fs::remove_file(&filename).expect("Failed to remove uploaded file");
-
     Ok(result)
 }
 
-fn main() {
-    let model_path = env::var("MODEL_PATH").expect("MODEL_PATH is not set in env");
-    let ctx = WhisperContext::new(&model_path).expect("failed to load model");
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    simple_logger::init_with_env().unwrap();
 
-    rocket::ignite()
-        .mount("/", routes![upload])
-        .manage(Context {
-            whisper: ctx,
-            request_id: AtomicUsize::new(0),
-        })
-        .launch();
+    match env::var("MODEL_PATH") {
+        Ok(_) => (),
+        Err(_) => panic!("MODEL_PATH is not set in env"),
+    }
+
+    log::info!("Starting server at http://127.0.0.1:8000");
+
+    HttpServer::new(move || App::new().service(web::resource("/").route(web::post().to(upload))))
+        .bind("0.0.0.0:8000")?
+        .run()
+        .await
 }

@@ -1,4 +1,4 @@
-FROM rustlang/rust:nightly-slim as builder
+FROM rust:1.71-slim-bookworm as builder
 
 # Update and install necessary dependencies
 RUN apt-get update && \
@@ -53,4 +53,5 @@ COPY --from=builder /app/target/release/stt .
 EXPOSE 8000
 
 # Run the binary
+ENV RUST_LOG=debug
 CMD ["./stt"]
