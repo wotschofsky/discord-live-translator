@@ -1,0 +1,39 @@
+version: '3.10'
+
+services:
+  bot:
+    build: .
+    restart: always
+    env_file: .env
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - STT_HOST=http://stt:8000
+      - TRANSLATION_HOST=http://libretranslate:5000
+    depends_on:
+      - stt
+      - libretranslate
+      - redis
+
+  stt:
+    build: ./stt
+    restart: always
+    ports:
+      - 8000:8000
+
+  libretranslate:
+    image: libretranslate/libretranslate:v1.3.11
+    restart: always
+    environment:
+      - LT_LOAD_ONLY=de,en
+      - LT_FRONTEND_LANGUAGE_SOURCE=en
+      - LT_FRONTEND_LANGUAGE_TARGET=de
+    stdin_open: true
+    tty: true
+    ports:
+      - 5000:5000
+
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - 6379:6379
