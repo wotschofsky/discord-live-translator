@@ -1,4 +1,4 @@
-**✨ [NOW AVAILABLE AS FREE HOSTED BOT](https://discord-live-translator.felisk.io/) 🎉**
+**✨ [NOW AVAILABLE AS FREE HOSTED BOT](https://livetranslator.xyz) 🎉**
 
 # Discord Live Translation Bot
 
@@ -9,48 +9,19 @@ A bot that automatically translate voice chat into a user selectable language in
 ## How to use
 
 1. Join a voice channel
-2. Make the bot join your channel by typing `!translation join`
-3. Use `!translation start <from> <to>` to select source and destination language and start the translation for yourself
+2. Make the bot join your channel by typing `/join`
+3. Use `/start <target>` to select the target language and start the translation for yourself
 4. Just talk like normal
-5. When you're done end your session using `!translation stop` and make the bot leave using `!translation leave`
+5. Once you're done end your session using `/stop` and make the bot leave your channel using `/leave`
 
 Other commands:
-`!translation status` tells you if you have translation mode enabled.
-`!translation languages` shows you all available languages.
-`!translation help` gives you an overview of all available commands.
+`/status` tells you if you have translation mode enabled.
+`/languages` shows you all available languages.
 
 ## Setup using Docker
 
-If you for whatever reason don't want to use the *free hosted version* of this bot is the easiest way to host this bot yourself is using [Docker](https://www.docker.com/).
+If you for whatever reason don't want to use the *free hosted version* of this bot is the easiest way to host this bot yourself is using [Docker](https://www.docker.com/). You can get the required credentials from the [Discord Developer Portal](https://discord.com/developers/applications).
 
-1. Build the *Dockerfile* located in the root of the project
-
-    `$ docker build -t discord-live-translator .`
-
-2. Set up an instance of [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate).
-
-3. Start an instance of [Redis](https://redis.io/).
-
-4. Start the discord-live-translator container while providing two volumes: One for the config file and one for the STT models. In addition provide the bot token from the [Discord Developer Portal](https://discord.com/developers/applications) as *BOT_TOKEN* as well as the URL for your Redis instance as *REDIS_URL* environment variables.
-
-    ```$ docker run -e BOT_TOKEN=xxxxx -v `pwd`/config.json:/app/config.json -v `pwd`/models:/app/models discord-live-translator```
-
-### Example config.json
-
-```json
-{
-  "translationHost": "http://translator:5000", // LibreTranslate host (use https://libretranslate.com if not self-hosting)
-  "languages": { // Contains all available languages
-    "en": { // Unique language key
-      "icon": ":flag_us:", // Fitting Icon/Emoji
-      "displayName": "English", // Language display name
-      "ttsModel": "model/en", // Name of the Coqui TTS model
-      "translatorCode": "en", // Language code for LibreTranslate
-      "supports": "io" // Specify whether only input or output or both are supported
-    },
-    ...
-    ...
-    ...
-  }
-}
-```
+1. Clone the repo
+2. Configure a `.env` file with appropriate values for `BOT_TOKEN` and `CLIENT_ID`
+3. Run `docker compose up -f docker-compose.prod.yml -d`
