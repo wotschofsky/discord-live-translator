@@ -6,6 +6,7 @@
   "license": "AGPL-3.0-only",
   "scripts": {
     "build": "sh build.sh",
+    "deploy": "ts-node src/deploy.ts",
     "start": "node -r source-map-support/register dist/app.js",
     "dev": "nodemon",
     "format": "prettier src/** --write"

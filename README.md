@@ -25,3 +25,14 @@ If you for whatever reason don't want to use the *free hosted version* of this b
 1. Clone the repo
 2. Configure a `.env` file with appropriate values for `BOT_TOKEN` and `CLIENT_ID`
 3. Run `docker compose up -f docker-compose.prod.yml -d`
+
+## Deploying slash commands
+
+For the bot to be controllable, you need to deploy the included slash commands:
+
+1. Clone the repo
+2. Install dependencies using Yarn
+3. Configure a `.env` file with appropriate values for `BOT_TOKEN` and `CLIENT_ID`
+4. Run `yarn deploy`
+
+When setting `GUILD_ID` in addition to the variables above, commands will be automatically redeployed on bot startup for that specific guild/server.

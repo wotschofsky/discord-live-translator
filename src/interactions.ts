@@ -32,7 +32,7 @@ export const initGuildCommands = async (token: string, clientId: string, guildId
 };
 
 export const initGlobalCommands = async (token: string, clientId: string) => {
-  const rest = new REST({ version: '9' }).setToken(token);
+  const rest = new REST({ version: '10' }).setToken(token);
 
   try {
     console.log('Started updating global (/) commands.');
