@@ -24,7 +24,7 @@ If you for whatever reason don't want to use the *free hosted version* of this b
 
 1. Clone the repo
 2. Configure a `.env` file with appropriate values for `BOT_TOKEN` and `CLIENT_ID`
-3. Run `docker compose up -f docker-compose.prod.yml -d`
+3. Run `docker compose -f docker-compose.prod.yml up -d`
 
 ## Deploying slash commands
 
