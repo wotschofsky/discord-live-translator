@@ -28,11 +28,10 @@ If you for whatever reason don't want to use the *free hosted version* of this b
 
 ## Deploying slash commands
 
-For the bot to be controllable, you need to deploy the included slash commands:
+For the bot to be controllable, you need to deploy the included slash commands.
 
-1. Clone the repo
-2. Install dependencies using Yarn
-3. Configure a `.env` file with appropriate values for `BOT_TOKEN` and `CLIENT_ID`
-4. Run `yarn deploy`
+Run `docker exec discord-live-translator-bot-1 yarn deploy` on your server after the bot container has started.
+
+Alternatively run `yarn deploy` in your local environment.
 
 When setting `GUILD_ID` in addition to the variables above, commands will be automatically redeployed on bot startup for that specific guild/server.
