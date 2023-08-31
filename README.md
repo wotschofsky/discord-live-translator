@@ -30,8 +30,8 @@ If you for whatever reason don't want to use the *free hosted version* of this b
 
 For the bot to be controllable, you need to deploy the included slash commands.
 
-Run `docker exec discord-live-translator-bot-1 yarn deploy` on your server after the bot container has started.
+Run `docker exec discord-live-translator-bot-1 pnpm run deploy` on your server after the bot container has started.
 
-Alternatively run `yarn deploy` in your local environment.
+Alternatively run `npm prun deploy` in your local environment.
 
 When setting `GUILD_ID` in addition to the variables above, commands will be automatically redeployed on bot startup for that specific guild/server.
