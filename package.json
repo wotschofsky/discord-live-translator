@@ -4,6 +4,9 @@
   "main": "src/app.ts",
   "author": "Felix Wotschofsky <hello@felisk.io>",
   "license": "AGPL-3.0-only",
+  "engines": {
+    "node": "20"
+  },
   "scripts": {
     "build": "sh build.sh",
     "deploy": "ts-node src/deploy.ts",
@@ -31,7 +34,7 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
-    "@tsconfig/node18": "^18.2.0",
+    "@tsconfig/node20": "^20.1.2",
     "@types/fs-extra": "^11.0.1",
     "@types/ioredis": "^5.0.0",
     "@types/node": "^20.4.5",
