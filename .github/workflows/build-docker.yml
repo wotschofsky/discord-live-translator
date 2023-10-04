@@ -17,6 +17,17 @@ jobs:
     # Skip for dependabot pushes due to lack of permissions
     if: github.event_name != 'push' || github.actor != 'dependabot[bot]'
     steps:
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@v1.3.0
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
