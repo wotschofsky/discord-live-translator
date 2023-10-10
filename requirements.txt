@@ -35,7 +35,7 @@ fsspec==2023.5.0
 ftfy==6.1.1
 g2pkk==0.1.2
 gitdb==4.0.10
-GitPython==3.1.35
+GitPython==3.1.37
 gruut==2.2.3
 gruut-ipa==0.13.0
 gruut-lang-de==2.0.0
