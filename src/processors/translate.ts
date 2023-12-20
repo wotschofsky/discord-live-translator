@@ -26,7 +26,7 @@ const translate = async (text: string, target: Exclude<keyof typeof languages, '
     return '';
   }
 
-  const data = await response.json();
+  const data = await response.json() as { translatedText: string };
 
   return data.translatedText;
 };

@@ -4,16 +4,17 @@ use num_cpus;
 use std::cmp;
 use std::env;
 use std::io::Cursor;
-use whisper_rs::{FullParams, SamplingStrategy, WhisperContext};
+use whisper_rs::{FullParams, SamplingStrategy, WhisperContext, WhisperContextParameters};
 
 #[macro_use]
 extern crate lazy_static;
 
 lazy_static! {
-    static ref WHISPER: WhisperContext = WhisperContext::new(
+    static ref WHISPER: WhisperContext = WhisperContext::new_with_params(
         env::var("MODEL_PATH")
             .expect("MODEL_PATH is not set in env")
-            .as_str()
+            .as_str(),
+        WhisperContextParameters::default()
     )
     .expect("failed to load model");
 }

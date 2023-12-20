@@ -15,32 +15,31 @@
     "format": "prettier src/** --write"
   },
   "dependencies": {
-    "@discordjs/builders": "^1.6.5",
-    "@discordjs/rest": "^2.0.1",
-    "@discordjs/voice": "^0.16.0",
-    "@t3-oss/env-core": "^0.6.0",
-    "discord-api-types": "^0.37.56",
-    "discord.js": "^14.11.0",
+    "@discordjs/builders": "^1.7.0",
+    "@discordjs/rest": "^2.2.0",
+    "@discordjs/voice": "^0.16.1",
+    "@t3-oss/env-core": "^0.7.1",
+    "discord-api-types": "^0.37.66",
+    "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
-    "execa": "^7.2.0",
-    "fs-extra": "^11.1.1",
+    "execa": "^8.0.1",
+    "fs-extra": "^11.2.0",
     "ioredis": "^5.3.2",
-    "libsodium-wrappers": "^0.7.11",
-    "opusscript": "^0.1.0",
+    "libsodium-wrappers": "^0.7.13",
+    "opusscript": "^0.1.1",
     "source-map-support": "^0.5.21",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "wav": "^1.0.2",
-    "zod": "^3.21.4"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@tsconfig/node20": "^20.1.2",
-    "@types/fs-extra": "^11.0.1",
-    "@types/ioredis": "^5.0.0",
-    "@types/node": "^20.4.5",
-    "@types/wav": "^1.0.1",
-    "nodemon": "^3.0.1",
-    "prettier": "^3.0.0",
-    "typescript": "^5.1.6"
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.10.5",
+    "@types/wav": "^1.0.4",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3"
   }
 }
