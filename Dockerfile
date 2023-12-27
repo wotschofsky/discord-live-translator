@@ -10,15 +10,21 @@ RUN apt-get update && apt-get upgrade -y
 
 # Install system dependencies
 RUN apt-get install -y --no-install-recommends \
+    build-essential \
     ca-certificates \
+    curl \
     espeak-ng \
     ffmpeg \
     g++ \
     # libsqlite3-dev required for Python
     libsqlite3-dev
 
+# Add Rust (required for building SudachiPy)
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+ENV PATH="/root/.cargo/bin:$PATH"
+
 # Add Python
-COPY --from=python:3.10-slim /usr/local /usr/local
+COPY --from=python:3.11-slim /usr/local /usr/local
 
 # Set directory
 WORKDIR /app

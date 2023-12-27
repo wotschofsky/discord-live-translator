@@ -139,3 +139,6 @@ models/
 
 # Rust / Cargo
 target/
+
+# Python
+.venv/
