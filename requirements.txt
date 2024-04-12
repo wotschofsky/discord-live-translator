@@ -47,7 +47,7 @@ gruut-lang-es==2.0.0
 gruut-lang-fr==2.0.2
 hangul-romanize==0.1.0
 huggingface-hub==0.20.1
-idna==3.6
+idna==3.7
 inflect==7.0.0
 itsdangerous==2.1.2
 jamo==0.4.1
