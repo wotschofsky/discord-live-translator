@@ -121,7 +121,7 @@ tokenizers==0.15.0
 tomli==2.0.1
 torch==2.1.2
 torchaudio==2.1.2
-tqdm==4.66.1
+tqdm==4.66.3
 trainer==0.0.36
 transformers==4.38.0
 TTS==0.22.0
