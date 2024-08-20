@@ -68,7 +68,7 @@ msgpack==1.0.7
 multidict==6.0.4
 murmurhash==1.0.10
 networkx==2.8.8
-nltk==3.8.1
+nltk==3.9
 num2words==0.5.13
 numba==0.58.1
 numpy==1.26.2
