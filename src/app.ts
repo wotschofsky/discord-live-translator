@@ -8,6 +8,7 @@ import { statusCommandHandler } from './commands/status';
 import { stopCommandHandler } from './commands/stop';
 import env from './env';
 import { initGuildCommands } from './interactions';
+import { trackEvent, flushEvents } from './utils/telemetry';
 import writeToLog from './utils/writeToLog';
 
 const client = new Discord.Client({
@@ -17,6 +18,19 @@ const client = new Discord.Client({
 
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return;
+
+  trackEvent(
+    {
+      userId: interaction.user.id,
+      guildId: interaction.guildId || 'unknown'
+    },
+    {
+      name: 'Command Used',
+      properties: {
+        command: interaction.commandName
+      }
+    }
+  );
 
   switch (interaction.commandName) {
     case 'join':
@@ -60,3 +74,11 @@ if (env.CLIENT_ID && env.GUILD_ID) {
     })
     .catch(console.error);
 }
+
+const handleShutdown = () => {
+  flushEvents();
+  process.exit(0);
+};
+
+process.on('SIGTERM', handleShutdown);
+process.on('SIGINT', handleShutdown);

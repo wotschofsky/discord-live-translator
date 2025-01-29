@@ -12,6 +12,8 @@ const env = createEnv({
     CLIENT_ID: z.string().optional(),
     GUILD_ID: z.string().optional(),
     LOG_PATH: z.string().optional(),
+    POSTHOG_API_KEY: z.string().optional(),
+    POSTHOG_HOST: z.string().optional().default('https://app.posthog.com'),
     REDIS_URL: z.string().optional(),
     STT_HOST: z.string(),
     TRANSLATION_HOST: z.string()
