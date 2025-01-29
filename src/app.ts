@@ -11,7 +11,8 @@ import { initGuildCommands } from './interactions';
 import writeToLog from './utils/writeToLog';
 
 const client = new Discord.Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
+  shards: 'auto'
 });
 
 client.on('interactionCreate', async (interaction) => {
