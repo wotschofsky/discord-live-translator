@@ -75,6 +75,24 @@ if (env.CLIENT_ID && env.GUILD_ID) {
     .catch(console.error);
 }
 
+if (env.HEARTBEAT_URL) {
+  setInterval(async () => {
+    if (client.isReady()) {
+      console.log(`Sending heartbeat to ${env.HEARTBEAT_URL}...`);
+      try {
+        const res = await fetch(env.HEARTBEAT_URL, {
+          method: 'POST'
+        });
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+      } catch (err) {
+        console.error('Heartbeat failed:', err);
+      }
+    }
+  }, 60 * 1000);
+}
+
 const handleShutdown = () => {
   flushEvents();
   process.exit(0);

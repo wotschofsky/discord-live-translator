@@ -16,7 +16,8 @@ const env = createEnv({
     POSTHOG_HOST: z.string().optional().default('https://app.posthog.com'),
     REDIS_URL: z.string().optional(),
     STT_HOST: z.string(),
-    TRANSLATION_HOST: z.string()
+    TRANSLATION_HOST: z.string(),
+    HEARTBEAT_URL: z.string().url()
   },
   runtimeEnv: process.env
 });
