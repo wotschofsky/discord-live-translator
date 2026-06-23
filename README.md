@@ -1,5 +1,3 @@
-**✨ [NOW AVAILABLE AS FREE HOSTED BOT](https://livetranslator.xyz) 🎉**
-
 # Discord Live Translation Bot
 
 *This is the documentation for the re-written v2 version. [Original v1 Version](/tree/v1)*
